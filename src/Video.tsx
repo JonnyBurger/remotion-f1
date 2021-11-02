@@ -9,7 +9,7 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Strobe"
 				component={Strobe}
-				durationInFrames={60}
+				durationInFrames={180}
 				fps={30}
 				width={1280}
 				height={720}
@@ -20,7 +20,7 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Rays"
 				component={Strobe}
-				durationInFrames={60}
+				durationInFrames={180}
 				fps={30}
 				width={1280}
 				height={720}
@@ -29,9 +29,20 @@ export const RemotionVideo: React.FC = () => {
 				}}
 			/>
 			<Composition
+				id="Sparks"
+				component={Strobe}
+				durationInFrames={180}
+				fps={30}
+				width={1280}
+				height={720}
+				defaultProps={{
+					type: 'sparks' as const,
+				}}
+			/>
+			<Composition
 				id="AllStrobes"
 				component={AllStrobes}
-				durationInFrames={60}
+				durationInFrames={180}
 				fps={30}
 				width={1280}
 				height={720}
@@ -39,6 +50,7 @@ export const RemotionVideo: React.FC = () => {
 					type: 'shines' as const,
 				}}
 			/>
+
 			<Composition
 				id="RadialGradient"
 				component={RadialGradient}

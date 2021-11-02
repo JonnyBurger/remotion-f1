@@ -13,6 +13,9 @@ export const AllStrobes: React.FC = () => {
 				<Strobe type="rays" />
 			</AbsoluteFill>
 			<AbsoluteFill>
+				<Strobe type="sparks" />
+			</AbsoluteFill>
+			<AbsoluteFill>
 				<RadialGradient />
 			</AbsoluteFill>
 		</AbsoluteFill>

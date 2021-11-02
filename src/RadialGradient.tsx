@@ -10,7 +10,7 @@ export const RadialGradient: React.FC = () => {
 				width,
 				top: -(width - height) / 2,
 				backgroundImage:
-					'radial-gradient(#6af1e157, #6af1e126 40%, transparent 100%)',
+					'radial-gradient(#6af1e165, #6af1e157 10%, #6af1e126 40%, transparent 100%)',
 			}}
 		/>
 	);

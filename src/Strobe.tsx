@@ -15,7 +15,7 @@ const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
 
 export const Strobe: React.FC<{
-	type: 'shines' | 'rays';
+	type: 'shines' | 'rays' | 'sparks';
 }> = ({type}) => {
 	const ref = useRef<HTMLCanvasElement>(null);
 	const {width, height, fps} = useVideoConfig();
@@ -37,7 +37,7 @@ export const Strobe: React.FC<{
 		}
 		const context = current.getContext('2d') as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
-		const lines = type === 'shines' ? 120 : 40;
+		const lines = type === 'sparks' ? 300 : type === 'shines' ? 120 : 40;
 		for (let i = 0; i < lines; i++) {
 			const fullCircle =
 				Math.sqrt(width * width + height * height) *
@@ -61,7 +61,12 @@ export const Strobe: React.FC<{
 			} else {
 				context.filter = 'blur(2px)';
 			}
-			const alphaRange = type === 'rays' ? [0.2, 0.8] : [0.1, 0.13];
+			const alphaRange =
+				type === 'rays'
+					? [0.2, 0.8]
+					: type === 'sparks'
+					? [0.5, 0.8]
+					: [0.1, 0.13];
 			context.globalAlpha = interpolate(
 				opacityNoise.noise2D(0, i / 10),
 				[-1, 1],
@@ -75,14 +80,28 @@ export const Strobe: React.FC<{
 				interpolate(
 					positionNoise.noise2D(0, i / 10),
 					[-1, 1],
-					[-Math.PI * 0.02, Math.PI * 0.02]
+					[-Math.PI * 0.07, Math.PI * 0.07]
 				);
-			const startX = Math.sin(rotation) * 20 + width / 2;
-			const startY = Math.cos(rotation) * 20 + height / 2;
-			const edgeX1 = Math.sin(rotation + alpha) * fullCircle + width / 2;
-			const edgeY1 = Math.cos(rotation + alpha) * fullCircle + height / 2;
-			const edgeX2 = Math.sin(rotation - alpha) * fullCircle + width / 2;
-			const edgeY2 = Math.cos(rotation - alpha) * fullCircle + height / 2;
+			const sparkOffset = Math.max(
+				0,
+				interpolate(
+					random(`random-${i}`),
+					[0, 1],
+					[-fullCircle * 20, fullCircle]
+				) +
+					frame * 30
+			);
+			if (type === 'sparks' && sparkOffset === 0) {
+				continue;
+			}
+			const startRadius = type === 'sparks' ? sparkOffset : 20;
+			const endRadius = type === 'sparks' ? sparkOffset + 30 : fullCircle;
+			const startX = Math.sin(rotation) * startRadius + width / 2;
+			const startY = Math.cos(rotation) * startRadius + height / 2;
+			const edgeX1 = Math.sin(rotation + alpha) * endRadius + width / 2;
+			const edgeY1 = Math.cos(rotation + alpha) * endRadius + height / 2;
+			const edgeX2 = Math.sin(rotation - alpha) * endRadius + width / 2;
+			const edgeY2 = Math.cos(rotation - alpha) * endRadius + height / 2;
 
 			context.moveTo(startX, startY);
 			context.lineTo(edgeX1, edgeY1);
@@ -91,7 +110,7 @@ export const Strobe: React.FC<{
 			context.fill();
 			context.closePath();
 		}
-	}, [height, width, frame, progress]);
+	}, [height, width, frame, progress, type]);
 
 	return (
 		<canvas ref={ref} style={{width, height}} width={width} height={height} />
