@@ -14,6 +14,8 @@ const colorNoise = new SimplexNoise('color');
 const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
 
+const FULL_DETAILS = true;
+
 export const Strobe: React.FC<{
 	type: 'shines' | 'rays' | 'sparks';
 }> = ({type}) => {
@@ -57,12 +59,14 @@ export const Strobe: React.FC<{
 								['#4bb6ab', '#6af1e1']
 						  )
 						: 'white';
-				if (type === 'shines') {
-					context.filter = 'blur(5px)';
-				} else if (type === 'rays') {
-					context.filter = 'blur(2px)';
-				} else if (type === 'sparks') {
-					context.filter = 'blur(2px)';
+				if (FULL_DETAILS) {
+					if (type === 'shines') {
+						context.filter = 'blur(5px)';
+					} else if (type === 'rays') {
+						context.filter = 'blur(2px)';
+					} else if (type === 'sparks') {
+						context.filter = 'blur(2px)';
+					}
 				}
 				const alphaRange =
 					type === 'rays'
@@ -101,7 +105,7 @@ export const Strobe: React.FC<{
 				if (type === 'sparks' && sparkOffset === 0) {
 					continue;
 				}
-				const startRadius = type === 'sparks' ? sparkOffset : 20;
+				const startRadius = type === 'sparks' ? sparkOffset : 0;
 				const endRadius = type === 'sparks' ? sparkOffset + 30 : fullCircle;
 				const startX = Math.sin(rotation) * startRadius + width / 2;
 				const startY = Math.cos(rotation) * startRadius + height / 2;
