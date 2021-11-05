@@ -17,9 +17,13 @@ const loadFont = (url: string): Promise<opentype.Font> => {
 	});
 };
 
-export const getOpenType = async (url: string): Promise<FontData> => {
+export const getOpenType = async (
+	url: string,
+	text: string,
+	options?: opentype.RenderOptions
+): Promise<FontData> => {
 	const font = await loadFont(url);
-	const path = font.getPath('13', 0, 0, 50);
+	const path = font.getPath(text, 0, 0, 100, options);
 
 	const boundingBox = path.getBoundingBox();
 	const svg = path.toPathData(4);

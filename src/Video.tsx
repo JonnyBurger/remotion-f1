@@ -1,6 +1,7 @@
 import {Composition} from 'remotion';
 import {AllStrobes} from './AllStrobes';
 import {Main} from './Main';
+import {Name} from './Name';
 import {Num} from './Number';
 import {RadialGradient} from './RadialGradient';
 import {Strobe} from './Strobe';
@@ -82,6 +83,14 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Num"
 				component={Num}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+			/>
+			<Composition
+				id="Name"
+				component={Name}
 				durationInFrames={90}
 				height={720}
 				width={1280}
