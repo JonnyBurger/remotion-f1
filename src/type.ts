@@ -3,6 +3,7 @@ import opentype from 'opentype.js';
 export type FontData = {
 	boundingBox: opentype.BoundingBox;
 	path: string;
+	chars: string[];
 };
 
 const loadFont = (url: string): Promise<opentype.Font> => {
@@ -31,5 +32,6 @@ export const getOpenType = async (
 	return {
 		boundingBox,
 		path: svg,
+		chars: font.getPaths(text, 0, 0, 100, options).map((p) => p.toPathData(4)),
 	};
 };

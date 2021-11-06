@@ -8,6 +8,8 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
+import {Name} from './Name';
+import {Num} from './Number';
 import vettel from './vettel.png';
 
 const Vettel: React.FC<{
@@ -79,17 +81,33 @@ export const DoubleVettel: React.FC = () => {
 		},
 	});
 
-	const scale = interpolate(entrance, [0, 1], [0.8, 1]);
+	const constantScale = interpolate(frame, [0, 100], [0, 0.15]);
+	const textScale = interpolate(frame, [0, 100], [0, 0.05]);
+
+	const scale = interpolate(entrance, [0, 1], [0.8, 0.9]) + constantScale;
+
 	return (
 		<AbsoluteFill style={{opacity: scale}}>
-			<AbsoluteFill style={{opacity: 0.4}}>
-				<Vettel scaleMultiplier={scale} />
+			<Sequence from={15}>
+				<AbsoluteFill style={{opacity: 0.4}}>
+					<Vettel scaleMultiplier={scale} />
+				</AbsoluteFill>
+			</Sequence>
+			<AbsoluteFill
+				style={{
+					transform: `scale(${entrance})`,
+				}}
+			>
+				<Num />
 			</AbsoluteFill>
-			<Sequence from={4}>
+			<Sequence from={20}>
 				<AbsoluteFill>
 					<Vettel scaleMultiplier={scale} />
 				</AbsoluteFill>
 			</Sequence>
+			<AbsoluteFill style={{transform: `scale(${entrance + textScale})`}}>
+				<Name />
+			</AbsoluteFill>
 		</AbsoluteFill>
 	);
 };

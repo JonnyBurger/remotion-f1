@@ -12,7 +12,6 @@ import {FontData, getOpenType} from './type';
 
 export const Num: React.FC = () => {
 	const frame = useCurrentFrame();
-	const {fps} = useVideoConfig();
 	const [path, setPath] = useState<FontData | null>(null);
 	const [handle] = useState(() => delayRender());
 
@@ -20,7 +19,8 @@ export const Num: React.FC = () => {
 
 	useEffect(() => {
 		getOpenType(
-			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf'
+			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
+			'69'
 		)
 			.then((p) => {
 				setPath(p);
@@ -31,14 +31,14 @@ export const Num: React.FC = () => {
 			});
 	}, [handle]);
 
-	const progress = interpolate(frame, [0, 80], [0, 1]);
+	const progress = interpolate(frame, [0, 40], [0, 1]);
 
-	const op1 = interpolate(progress, [0.6, 0.9], [0, 1]);
-	const op2 = interpolate(progress, [0.7, 1], [0, 1]);
+	const op1 = interpolate(progress, [0, 1], [0, 1]);
+	const op2 = interpolate(progress, [0.5, 1], [0, 1]);
 
 	const strokeDashoffset = interpolate(progress, [0, 1], [0, 40]);
 
-	const drawProgress = interpolate(progress, [0.1, 0.7], [100, 0], {
+	const drawProgress = interpolate(progress, [0.1, 0.5], [100, 0], {
 		extrapolateLeft: 'clamp',
 		extrapolateRight: 'clamp',
 	});
@@ -48,7 +48,8 @@ export const Num: React.FC = () => {
 			{path ? (
 				<svg
 					style={{
-						height: 400,
+						height: 450,
+						marginTop: -100,
 					}}
 					viewBox={extendViewbox(
 						`${path.boundingBox.x1} ${path.boundingBox.y1} ${
@@ -69,9 +70,10 @@ export const Num: React.FC = () => {
 						</linearGradient>
 					</defs>
 					<path
-						stroke="rgba(255, 255, 255, 0.1)"
+						stroke="rgba(255, 255, 255, 0.6)"
 						strokeWidth={0.25}
 						d={path.path}
+						fill="transparent "
 					/>
 					<path d={path.path} fill={`url(#${linearGradientId})`} />
 					<path
