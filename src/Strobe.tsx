@@ -6,6 +6,7 @@ import {
 	spring,
 	useCurrentFrame,
 	useVideoConfig,
+	Video,
 } from 'remotion';
 import SimplexNoise from 'simplex-noise';
 
@@ -14,7 +15,7 @@ const colorNoise = new SimplexNoise('color');
 const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
 
-const FULL_DETAILS = true;
+const FULL_DETAILS = false;
 
 export const Strobe: React.FC<{
 	type: 'shines' | 'rays' | 'sparks';
@@ -125,6 +126,8 @@ export const Strobe: React.FC<{
 	}, [height, width, frame, progress, type]);
 
 	return (
-		<canvas ref={ref} style={{width, height}} width={width} height={height} />
+		<div>
+			<canvas ref={ref} style={{width, height}} width={width} height={height} />
+		</div>
 	);
 };

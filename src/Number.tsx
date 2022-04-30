@@ -20,7 +20,7 @@ export const Num: React.FC = () => {
 	useEffect(() => {
 		getOpenType(
 			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			'69'
+			'12'
 		)
 			.then((p) => {
 				setPath(p);

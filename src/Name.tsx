@@ -31,7 +31,7 @@ export const Name: React.FC = () => {
 	useEffect(() => {
 		getOpenType(
 			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			'BURKARD',
+			'ADEMI',
 			{letterSpacing: 0.03}
 		)
 			.then((p) => {
@@ -45,7 +45,7 @@ export const Name: React.FC = () => {
 	useEffect(() => {
 		getOpenType(
 			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Regular.otf',
-			'ROMAN',
+			'MEHMET',
 			{
 				letterSpacing: 0.5,
 			}
