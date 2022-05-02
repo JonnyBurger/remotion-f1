@@ -28,7 +28,7 @@ const Vettel: React.FC<{
 	});
 
 	return (
-		<TriangleEntrace showMask progress={progress}>
+		<TriangleEntrace showMask={false} progress={progress}>
 			<Img
 				style={{
 					width: 537,

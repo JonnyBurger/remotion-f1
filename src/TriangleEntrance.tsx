@@ -10,9 +10,8 @@ export const TriangleEntrace: React.FC<{
 	const {height, width} = useVideoConfig();
 	const path = `
 	M 0 0
-	L ${600 + progress * 1280} 0
-	L ${progress * 1280 - 100} ${height}
-	L 0 ${height}
+	L ${progress * width * 2} 0
+	L ${0} ${height * 2 * progress}
 	Z`;
 	const [clipId] = useState(() => String(random(null)));
 

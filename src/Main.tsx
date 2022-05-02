@@ -21,7 +21,7 @@ export const Main: React.FC = () => {
 		},
 	});
 	return (
-		<TriangleEntrace showMask progress={entrance}>
+		<TriangleEntrace showMask={false} progress={entrance}>
 			<AbsoluteFill style={{backgroundColor: 'black'}}>
 				<AbsoluteFill>
 					<AllStrobes />
