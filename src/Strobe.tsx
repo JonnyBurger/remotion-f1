@@ -6,7 +6,6 @@ import {
 	spring,
 	useCurrentFrame,
 	useVideoConfig,
-	Video,
 } from 'remotion';
 import SimplexNoise from 'simplex-noise';
 

@@ -1,10 +1,4 @@
-import {
-	interpolate,
-	random,
-	spring,
-	useCurrentFrame,
-	useVideoConfig,
-} from 'remotion';
+import {interpolate, random, useCurrentFrame} from 'remotion';
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, continueRender, delayRender} from 'remotion';
 import {extendViewbox} from './extend-viewbox';

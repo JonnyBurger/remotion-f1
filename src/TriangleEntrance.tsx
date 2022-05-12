@@ -1,19 +1,32 @@
-import {AbsoluteFill} from 'remotion';
 import React, {useState} from 'react';
-import {random, useVideoConfig} from 'remotion';
+import {AbsoluteFill, random, useVideoConfig} from 'remotion';
+
+type TransitionType = 'in' | 'out';
 
 export const TriangleEntrace: React.FC<{
 	progress: number;
 	children: React.ReactNode;
-	showMask: boolean;
-}> = ({children, progress, showMask}) => {
+	type: TransitionType;
+}> = ({children, progress, type}) => {
 	const {height, width} = useVideoConfig();
-	const path = `
-	M 0 0
-	L ${progress * width * 2} 0
-	L ${0} ${height * 2 * progress}
-	Z`;
 	const [clipId] = useState(() => String(random(null)));
+
+	const progressInDirection = type === 'in' ? progress : 1 - progress;
+
+	const pathIn = `
+	M 0 0
+	L ${progressInDirection * width * 2} 0
+	L ${0} ${height * 2 * progressInDirection}
+	Z`;
+
+	const pathOut = `
+	M ${width} ${height}
+	L ${width - 2 * progressInDirection * width} ${height}
+	L ${width} ${height - 2 * progressInDirection * height}
+	Z
+	`;
+
+	const path = type === 'in' ? pathIn : pathOut;
 
 	return (
 		<AbsoluteFill>
@@ -35,13 +48,6 @@ export const TriangleEntrace: React.FC<{
 					</defs>
 				</svg>
 			</AbsoluteFill>
-			{showMask ? (
-				<AbsoluteFill>
-					<svg viewBox={`0 0 ${width} ${height}`}>
-						<path d={path} fill="red" />
-					</svg>
-				</AbsoluteFill>
-			) : null}
 		</AbsoluteFill>
 	);
 };

@@ -1,11 +1,13 @@
 import {Composition} from 'remotion';
 import {AllStrobes} from './AllStrobes';
+import {Entrance} from './Entrance';
+import {Exit} from './Exit';
 import {Main} from './Main';
 import {Name} from './Name';
 import {Num} from './Number';
 import {RadialGradient} from './RadialGradient';
 import {Strobe} from './Strobe';
-import {DoubleVettel} from './Vettel';
+import {Vettel} from './Vettel';
 
 export const RemotionVideo: React.FC = () => {
 	return (
@@ -63,10 +65,9 @@ export const RemotionVideo: React.FC = () => {
 				width={1280}
 				fps={30}
 			/>
-
 			<Composition
 				id="Vettel"
-				component={DoubleVettel}
+				component={Vettel}
 				durationInFrames={150}
 				height={720}
 				width={1280}
@@ -91,6 +92,22 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Name"
 				component={Name}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+			/>
+			<Composition
+				id="Entrance"
+				component={Entrance}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+			/>
+			<Composition
+				id="Exit"
+				component={Exit}
 				durationInFrames={90}
 				height={720}
 				width={1280}
