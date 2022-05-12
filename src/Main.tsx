@@ -8,7 +8,8 @@ import {
 	useVideoConfig,
 } from 'remotion';
 import {AllStrobes} from './AllStrobes';
-import {Name} from './Name';
+import {FirstName} from './FirstName';
+import {LastName} from './LastName';
 import {Num} from './Number';
 import {TriangleEntrace} from './TriangleEntrance';
 import {Vettel} from './Vettel';
@@ -78,7 +79,12 @@ export const Main: React.FC = () => {
 						<AbsoluteFill
 							style={{transform: `scale(${centerZoom + textScale})`}}
 						>
-							<Name />
+							<FirstName />
+						</AbsoluteFill>
+						<AbsoluteFill
+							style={{transform: `scale(${centerZoom + textScale})`}}
+						>
+							<LastName />
 						</AbsoluteFill>
 					</AbsoluteFill>
 				</Sequence>

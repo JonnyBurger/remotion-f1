@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+	AbsoluteFill,
 	continueRender,
 	delayRender,
 	interpolate,
@@ -8,17 +9,13 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {useEffect} from 'react';
-import React from 'react';
-import {AbsoluteFill} from 'remotion';
-import {FontData, getOpenType} from './type';
 import {extendViewbox} from './extend-viewbox';
+import {FontData, getOpenType} from './type';
 
 const TEXT_COLOR = '#ffffff';
 
-export const Name: React.FC = () => {
+export const LastName: React.FC = () => {
 	const [lastNamePath, setPath] = useState<FontData | null>(null);
-	const [firstNamePath, setPath2] = useState<FontData | null>(null);
 	const [handle] = useState(() => delayRender());
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
@@ -42,57 +39,14 @@ export const Name: React.FC = () => {
 				console.log(err);
 			});
 	}, [handle]);
-	useEffect(() => {
-		getOpenType(
-			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Regular.otf',
-			'SEBASTIAN',
-			{
-				letterSpacing: 0.5,
-			}
-		)
-			.then((p) => {
-				setPath2(p);
-				continueRender(handle);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [handle]);
 
 	return (
 		<AbsoluteFill
 			style={{
 				filter: 'drop-shadow(0 0 20px rgba(0,0,0,1))',
-				paddingTop: 450,
+				paddingTop: 500,
 			}}
 		>
-			{firstNamePath ? (
-				<svg
-					style={{
-						height: 34,
-					}}
-					viewBox={extendViewbox(
-						`${firstNamePath.boundingBox.x1} ${firstNamePath.boundingBox.y1} ${
-							firstNamePath.boundingBox.x2 - firstNamePath.boundingBox.x1
-						} ${firstNamePath.boundingBox.y2 - firstNamePath.boundingBox.y1}`,
-						1.2
-					)}
-				>
-					{firstNamePath.chars.map((char, i) => {
-						const delay = random(i) * fps * 0.5;
-						const opacity = interpolate(frame, [delay, delay + 10], [0, 1], {
-							extrapolateLeft: 'clamp',
-							extrapolateRight: 'clamp',
-						});
-						const color = interpolateColors(
-							opacity,
-							[0, 1],
-							['transparent', TEXT_COLOR]
-						);
-						return <path key={i} d={char} fill={color} />;
-					})}
-				</svg>
-			) : null}
 			<div style={{height: 2}} />
 			{lastNamePath ? (
 				<svg
