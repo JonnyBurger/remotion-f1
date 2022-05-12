@@ -6,6 +6,7 @@ import {FirstName} from './FirstName';
 import {Main} from './Main';
 import {Num} from './Number';
 import {RadialGradient} from './RadialGradient';
+import {SideVsSide} from './SideVsSide';
 import {Strobe} from './Strobe';
 import {Vettel} from './Vettel';
 
@@ -108,6 +109,14 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Exit"
 				component={Exit}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+			/>
+			<Composition
+				id="SideVsSide"
+				component={SideVsSide}
 				durationInFrames={90}
 				height={720}
 				width={1280}
