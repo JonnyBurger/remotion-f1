@@ -50,9 +50,9 @@ export const Main: React.FC = () => {
 	return (
 		<TriangleEntrace type="in" progress={triangleProgress}>
 			<AbsoluteFill style={{backgroundColor: 'black'}}>
-				<AbsoluteFill>
+				<TriangleEntrace type="out" progress={exit}>
 					<AllStrobes />
-				</AbsoluteFill>
+				</TriangleEntrace>
 				<Sequence from={5}>
 					<AbsoluteFill style={{opacity: scale}}>
 						<Sequence from={15}>
@@ -76,11 +76,13 @@ export const Main: React.FC = () => {
 								</AbsoluteFill>
 							</TriangleEntrace>
 						</Sequence>
-						<AbsoluteFill
-							style={{transform: `scale(${centerZoom + textScale})`}}
-						>
-							<FirstName />
-						</AbsoluteFill>
+						<TriangleEntrace progress={exit} type="out">
+							<AbsoluteFill
+								style={{transform: `scale(${centerZoom + textScale})`}}
+							>
+								<FirstName />
+							</AbsoluteFill>
+						</TriangleEntrace>
 						<AbsoluteFill
 							style={{transform: `scale(${centerZoom + textScale})`}}
 						>
