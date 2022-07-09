@@ -147,7 +147,7 @@ const getOpacityNoise = (
 	alphaRange: [number, number]
 ) => {
 	if (type === 'white-base') {
-		return 0.01;
+		return 0.015;
 	}
 	return interpolate(
 		opacityNoise.noise2D(0, index / 2000),

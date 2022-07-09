@@ -18,14 +18,6 @@ export const AllStrobes: React.FC<{
 		<AbsoluteFill style={{opacity: fadeOut}}>
 			<Sequence from={8}>
 				<AbsoluteFill>
-					<Strobe
-						width={width}
-						color1={color1}
-						color2={color2}
-						type="white-base"
-					/>
-				</AbsoluteFill>
-				<AbsoluteFill>
 					<Strobe width={width} color1={color1} color2={color2} type="shines" />
 				</AbsoluteFill>
 				<AbsoluteFill>
@@ -33,6 +25,14 @@ export const AllStrobes: React.FC<{
 				</AbsoluteFill>
 				<AbsoluteFill>
 					<Strobe width={width} color1={color1} color2={color2} type="sparks" />
+				</AbsoluteFill>
+				<AbsoluteFill>
+					<Strobe
+						width={width}
+						color1={color1}
+						color2={color2}
+						type="white-base"
+					/>
 				</AbsoluteFill>
 			</Sequence>
 			<Sequence from={8}>

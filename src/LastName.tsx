@@ -4,13 +4,13 @@ import {
 	continueRender,
 	delayRender,
 	interpolate,
-	interpolateColors,
 	random,
 	staticFile,
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
 import {extendViewbox} from './extend-viewbox';
+import {TriangleEntrance} from './TriangleEntrance';
 import {FontData, getOpenType} from './type';
 
 const TEXT_COLOR = '#ffffff';
@@ -39,26 +39,28 @@ export const LastName: React.FC<{
 			});
 	}, [handle, lastName]);
 
+	const viewBox = lastNamePath
+		? extendViewbox(
+				`${lastNamePath.boundingBox.x1} ${lastNamePath.boundingBox.y1} ${
+					lastNamePath.boundingBox.x2 - lastNamePath.boundingBox.x1
+				} ${lastNamePath.boundingBox.y2 - lastNamePath.boundingBox.y1}`,
+				1.2
+		  )
+		: '';
+
 	return (
 		<AbsoluteFill
 			style={{
-				filter: 'drop-shadow(0 0 20px rgba(0,0,0,1))',
-				paddingTop: 500,
+				filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.3))',
+				paddingTop: 535,
 			}}
 		>
-			<div style={{height: 2}} />
 			{lastNamePath ? (
 				<svg
 					style={{
 						height: 100,
 					}}
-					viewBox={extendViewbox(
-						`${lastNamePath.boundingBox.x1} ${lastNamePath.boundingBox.y1} ${
-							lastNamePath.boundingBox.x2 - lastNamePath.boundingBox.x1
-						} ${lastNamePath.boundingBox.y2 - lastNamePath.boundingBox.y1}`,
-						1.2
-					)}
-					fill={`url(#${linearGradientId})`}
+					viewBox={viewBox}
 				>
 					<defs>
 						<linearGradient
@@ -72,33 +74,43 @@ export const LastName: React.FC<{
 						</linearGradient>
 					</defs>
 					{lastNamePath.chars.map((char, i) => {
-						const delay = (random(i + 'x') * fps) / 4;
-						const opacity = interpolate(frame, [delay, delay + 2], [0, 1], {
-							extrapolateLeft: 'clamp',
-							extrapolateRight: 'clamp',
-						});
-						const color = interpolateColors(
-							opacity,
-							[0, 1],
-							['transparent', TEXT_COLOR]
-						);
+						const delay = (random(i + 'x') * fps) / 4 + 4;
 						return (
 							<>
-								<path
-									strokeWidth={1.5}
-									stroke={color}
-									d={char}
-									fill="transparent"
-								/>
+								{frame > Math.round(delay) ? (
+									<path
+										strokeWidth={1.5}
+										stroke="rgba(255, 255, 255, 0.5)"
+										d={char}
+										fill="transparent"
+									/>
+								) : null}
 								{frame === Math.round(delay) ? (
 									<path d={char} fill={TEXT_COLOR} style={{opacity: 0.4}} />
 								) : null}
 							</>
 						);
 					})}
-					<path d={lastNamePath.path} />
 				</svg>
-			) : null}
+			) : null}{' '}
+			<TriangleEntrance type="in" progress={progress}>
+				<AbsoluteFill
+					style={{
+						paddingTop: 535,
+					}}
+				>
+					{lastNamePath ? (
+						<svg
+							style={{
+								height: 100,
+							}}
+							viewBox={viewBox}
+						>
+							<path strokeWidth={1.5} fill="#eee" d={lastNamePath.path} />
+						</svg>
+					) : null}
+				</AbsoluteFill>
+			</TriangleEntrance>
 		</AbsoluteFill>
 	);
 };

@@ -67,7 +67,7 @@ export const Main: React.FC<{
 		},
 	});
 
-	const textScale = interpolate(frame, [0, 100], [0, 0.05]);
+	const textScale = interpolate(frame, [0, 100], [0, 0.02]);
 
 	return (
 		<TriangleEntrance progress={nameExitDelayed} type="out">
@@ -98,7 +98,7 @@ export const Main: React.FC<{
 						</TriangleEntrance>
 						<Sequence from={5}>
 							<TriangleEntrance type="out" progress={exit}>
-								<AbsoluteFill style={{opacity: 0.6}}>
+								<AbsoluteFill style={{opacity: 0.85}}>
 									<Driver src={src} scaleMultiplier={1} />
 								</AbsoluteFill>
 							</TriangleEntrance>

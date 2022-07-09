@@ -31,25 +31,24 @@ export const Num: React.FC<{
 			});
 	}, [handle, numb]);
 
-	const progress = interpolate(frame, [0, 40], [0, 1]);
+	const progress = interpolate(frame, [20, 70], [0.1, 1], {
+		extrapolateLeft: 'clamp',
+	});
 
 	const op1 = interpolate(progress, [0, 1], [0, 1]);
 	const op2 = interpolate(progress, [0.5, 1], [0, 1]);
 
 	const strokeDashoffset = interpolate(progress, [0, 1], [0, 40]);
 
-	const drawProgress = interpolate(progress, [0.1, 0.5], [100, 0], {
-		extrapolateLeft: 'clamp',
-		extrapolateRight: 'clamp',
-	});
+	const strokeDashOpacity = interpolate(frame, [10, 25, 50], [0, 1, 0]);
 
 	return (
 		<AbsoluteFill style={{justifyContent: 'center', alignItems: 'center'}}>
 			{path ? (
 				<svg
 					style={{
-						height: 500,
-						marginTop: -140,
+						height: 480,
+						marginTop: -100,
 					}}
 					viewBox={extendViewbox(
 						`${path.boundingBox.x1} ${path.boundingBox.y1} ${
@@ -70,29 +69,26 @@ export const Num: React.FC<{
 						</linearGradient>
 					</defs>
 					<path
-						stroke="rgba(255, 255, 255, 0.6)"
+						stroke="rgba(255, 255, 255, 0)"
 						strokeWidth={0.25}
 						d={path.path}
 						fill="transparent "
 					/>
 					<path d={path.path} fill={`url(#${linearGradientId})`} />
 					<path
-						stroke="rgba(255, 255, 255, 0.9)"
+						stroke="rgba(255, 255, 255, 0.2)"
 						strokeWidth={0.25}
 						fill="transparent"
 						d={path.path}
-						pathLength="100"
-						strokeDasharray="100"
-						strokeDashoffset={drawProgress}
 					/>
 					<path
-						stroke="rgba(255, 255, 255, 0.2)"
-						strokeWidth={0.25}
-						strokeDasharray="30 30"
+						stroke={`rgba(255, 255, 255, ${strokeDashOpacity})`}
+						strokeWidth={0.3}
+						strokeDasharray="100 100"
 						fill="transparent"
 						strokeDashoffset={strokeDashoffset}
 						style={{
-							filter: 'blur(0.1px)',
+							filter: 'blur(0.4px)',
 						}}
 						d={path.path}
 					/>

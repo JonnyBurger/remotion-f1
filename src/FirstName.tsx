@@ -39,8 +39,8 @@ export const FirstName: React.FC<{
 	return (
 		<AbsoluteFill
 			style={{
-				filter: 'drop-shadow(0 0 20px rgba(0,0,0,1))',
-				paddingTop: 460,
+				filter: 'drop-shadow(0 0 15px rgba(0,0,0,1))',
+				paddingTop: 490,
 			}}
 		>
 			{firstNamePath ? (
