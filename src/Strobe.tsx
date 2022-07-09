@@ -12,8 +12,159 @@ const positionNoise = new SimplexNoise('position');
 const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
 
+type Type = 'shines' | 'rays' | 'sparks' | 'white-base';
+
+const getAmountOfLines = (type: Type): number => {
+	if (type === 'sparks') {
+		return 600;
+	}
+	if (type === 'shines') {
+		return 10000;
+	}
+	if (type === 'rays') {
+		return 60;
+	}
+	if (type === 'white-base') {
+		return 10000;
+	}
+
+	throw new Error('');
+};
+
+const rotationRandomness = (type: Type, index: number) => {
+	if (type === 'shines') {
+		return 0;
+	}
+	if (type === 'white-base') {
+		return 0;
+	}
+	return interpolate(
+		positionNoise.noise2D(0, index / 2),
+		[-1, 1],
+		[-Math.PI * 0.05, Math.PI * 0.05]
+	);
+};
+
+const getColor = (type: Type, color1: string) => {
+	return type === 'shines' ? color1 : 'white';
+};
+
+const getRadius = (type: Type) => {
+	if (type === 'rays') {
+		return 0.5;
+	}
+	return 1;
+};
+
+const getSpreadRadius = (type: Type, progress: number) => {
+	if (type === 'white-base') {
+		return Math.PI;
+	}
+	return interpolate(
+		progress,
+		[0, 1],
+		[0.6 * getRadius(type), getRadius(type)]
+	);
+};
+
+const getRotation = (
+	type: Type,
+	progress: number,
+	index: number,
+	direction: string
+) => {
+	const spreadRadius = getSpreadRadius(type, progress);
+
+	let rotation =
+		interpolate(
+			index,
+			[0, getAmountOfLines(type)],
+			[-spreadRadius, spreadRadius]
+		) +
+		Math.PI / 2 +
+		rotationRandomness(type, index);
+
+	if (direction === 'right') {
+		rotation += Math.PI;
+	} else if (type === 'white-base') {
+		rotation += Math.PI * 0.5;
+	}
+
+	return rotation;
+};
+
+const getAlphaRange = (type: Type): [number, number] => {
+	if (type === 'rays') {
+		return [0.3, 0.6];
+	}
+	if (type === 'sparks') {
+		return [0.5, 0.8];
+	}
+	if (type === 'shines') {
+		return [-0.03, 0.15];
+	}
+	if (type === 'white-base') {
+		return [0.03, 0.09];
+	}
+
+	throw new Error('unknown type');
+};
+
+export const getOpacityGradient = (
+	type: Type,
+	index: number,
+	direction: string
+) => {
+	if (type === 'white-base') {
+		if (direction === 'right') {
+			return interpolate(
+				index,
+				[
+					0,
+					getAmountOfLines(type) * 0.75,
+					getAmountOfLines(type) * 0.75 + 0.0000001,
+					getAmountOfLines(type),
+				],
+				[0, 0, 1, 0]
+			);
+		}
+		return interpolate(
+			index,
+			[0, getAmountOfLines(type) * 0.75, getAmountOfLines(type)],
+			[0, 0, 1]
+		);
+	}
+	return interpolate(
+		index,
+		[0, getAmountOfLines(type) / 2, getAmountOfLines(type)],
+		[0, 1, 0]
+	);
+};
+
+const getOpacityNoise = (
+	type: Type,
+	index: number,
+	alphaRange: [number, number]
+) => {
+	if (type === 'white-base') {
+		return 0.01;
+	}
+	return interpolate(
+		opacityNoise.noise2D(0, index / 2000),
+		[-1, 1],
+		alphaRange
+	);
+};
+
+const getOpacity = (type: Type, index: number, direction: string) => {
+	const opacityGradient = getOpacityGradient(type, index, direction);
+
+	const alphaRange = getAlphaRange(type);
+	return getOpacityNoise(type, index, alphaRange) * opacityGradient;
+};
+
 export const Strobe: React.FC<{
-	type: 'shines' | 'rays' | 'sparks';
+	type: Type;
 	color1: string;
 	color2: string;
 	width: number;
@@ -38,63 +189,30 @@ export const Strobe: React.FC<{
 		}
 		const context = current.getContext('2d') as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
-		const lines = type === 'sparks' ? 600 : type === 'shines' ? 10000 : 60;
+		const lines = getAmountOfLines(type);
 		for (const direction of ['left', 'right']) {
 			for (let i = 0; i < lines; i++) {
 				const fullCircle =
 					Math.sqrt(width * width + height * height) *
 					1.5 *
-					interpolate(opacityNoise.noise2D(0, i / 2000), [0, 1], [0.8, 1]) *
+					interpolate(opacityNoise.noise2D(0, i / 200), [0, 1], [0.8, 1]) *
 					interpolate(random(`progress-${i}`), [0, 1], [0.6, 1.5]) *
 					progress;
 				const alpha =
-					type === 'shines'
+					type === 'white-base'
+						? 0
+						: type === 'shines'
 						? 0.04
 						: interpolate(blurNoise.noise2D(0, i), [-1, 1], [0, 0.005]);
-				const color = type === 'shines' ? color1 : 'white';
+				const color = getColor(type, color1);
 
-				const opacityGradient = interpolate(
-					i,
-					[0, lines / 2, lines],
-					[0, 1, 0]
-				);
-
-				const alphaRange =
-					type === 'rays'
-						? [0.3, 0.6]
-						: type === 'sparks'
-						? [0.5, 0.8]
-						: [-0.03, 0.15];
-
-				context.globalAlpha =
-					interpolate(opacityNoise.noise2D(0, i / 2000), [-1, 1], alphaRange) *
-					opacityGradient;
+				context.globalAlpha = getOpacity(type, i, direction);
 				context.fillStyle = color;
 				context.strokeStyle = color;
 				context.beginPath();
 
-				const rotationNoise =
-					type === 'shines'
-						? 0
-						: interpolate(
-								positionNoise.noise2D(0, i / 2),
-								[-1, 1],
-								[-Math.PI * 0.05, Math.PI * 0.05]
-						  );
+				const rotation = getRotation(type, progress, i, direction);
 
-				const finalRadius = type === 'rays' ? 0.5 : 1;
-
-				const spreadRadius = interpolate(progress, [0, 1], [0.6, finalRadius]);
-
-				let rotation =
-					interpolate(i, [0, lines], [-spreadRadius, spreadRadius]) +
-					Math.PI / 2 +
-					rotationNoise;
-
-				if (direction === 'right') {
-					rotation += Math.PI;
-				}
-				rotation -= 0;
 				const sparkOffset = Math.max(
 					0,
 					interpolate(
@@ -122,8 +240,8 @@ export const Strobe: React.FC<{
 
 				context.moveTo(startX, startY);
 				context.lineTo(edgeX1, edgeY1);
-				context.lineTo(edgeX2, edgeY2);
 				if (type === 'rays') {
+					context.lineTo(edgeX2, edgeY2);
 					context.fill();
 				} else {
 					context.stroke();

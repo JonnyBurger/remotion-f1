@@ -15,14 +15,14 @@ export const TriangleEntrance: React.FC<{
 
 	const pathIn = `
 	M 0 0
-	L ${progressInDirection * width * 2} 0
-	L ${0} ${height * 2 * progressInDirection}
+	L ${progressInDirection * 2} 0
+	L ${0} ${2 * progressInDirection}
 	Z`;
 
 	const pathOut = `
-	M ${width} ${height}
-	L ${width - 2 * progressInDirection * width} ${height}
-	L ${width} ${height - 2 * progressInDirection * height}
+	M 1 1
+	L ${1 - 2 * progressInDirection} 1
+	L ${1} ${1 - 2 * progressInDirection}
 	Z
 	`;
 

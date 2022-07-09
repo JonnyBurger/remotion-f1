@@ -85,7 +85,7 @@ export const LastName: React.FC<{
 						return (
 							<>
 								<path
-									strokeWidth={0.25}
+									strokeWidth={1.5}
 									stroke={color}
 									d={char}
 									fill="transparent"

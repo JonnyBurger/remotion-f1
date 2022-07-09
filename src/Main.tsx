@@ -67,10 +67,7 @@ export const Main: React.FC<{
 		},
 	});
 
-	const constantScale = interpolate(frame, [0, 100], [0, 0.15]);
 	const textScale = interpolate(frame, [0, 100], [0, 0.05]);
-
-	const scale = interpolate(centerZoom, [0, 1], [0.8, 0.9]) + constantScale;
 
 	return (
 		<TriangleEntrance progress={nameExitDelayed} type="out">
@@ -82,13 +79,6 @@ export const Main: React.FC<{
 						</AbsoluteFill>
 					</TriangleEntrance>
 					<Sequence from={5}>
-						<Sequence from={5}>
-							<TriangleEntrance type="out" progress={exit}>
-								<AbsoluteFill style={{opacity: 0.6}}>
-									<Driver src={src} scaleMultiplier={1} />
-								</AbsoluteFill>
-							</TriangleEntrance>
-						</Sequence>
 						<AbsoluteFill
 							style={{
 								transform: `scale(${centerZoom})`,
@@ -106,15 +96,13 @@ export const Main: React.FC<{
 								<Num numb={numb} />
 							</AbsoluteFill>
 						</TriangleEntrance>
-						<TriangleEntrance progress={nameExit} type="out">
-							<AbsoluteFill
-								style={{
-									transform: `scale(${centerZoom})`,
-								}}
-							>
-								<Num numb={numb} />
-							</AbsoluteFill>
-						</TriangleEntrance>
+						<Sequence from={5}>
+							<TriangleEntrance type="out" progress={exit}>
+								<AbsoluteFill style={{opacity: 0.6}}>
+									<Driver src={src} scaleMultiplier={1} />
+								</AbsoluteFill>
+							</TriangleEntrance>
+						</Sequence>
 						<Sequence from={10}>
 							<TriangleEntrance type="out" progress={exit}>
 								<AbsoluteFill>
