@@ -1,6 +1,7 @@
 import React from 'react';
 import {
 	AbsoluteFill,
+	interpolate,
 	interpolateColors,
 	spring,
 	useCurrentFrame,
@@ -22,6 +23,7 @@ export const RadialGradient: React.FC<{
 		},
 		durationInFrames: 10,
 	});
+	const percent = interpolate(scale, [0, 1], [20, 45]);
 	const {height} = useVideoConfig();
 	return (
 		<AbsoluteFill
@@ -32,11 +34,8 @@ export const RadialGradient: React.FC<{
 				backgroundImage: `radial-gradient(${interpolateColors(
 					0.6,
 					[0, 1],
-					[
-						'transparent',
-						interpolateColors(0.2, [0, 1], [color1, 'transparent']),
-					]
-				)}, transparent ${scale * 60}%)`,
+					['transparent', interpolateColors(0, [0, 1], [color1, 'transparent'])]
+				)}, transparent ${percent}%)`,
 			}}
 		/>
 	);

@@ -38,7 +38,7 @@ export const Strobe: React.FC<{
 		}
 		const context = current.getContext('2d') as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
-		const lines = type === 'sparks' ? 300 : type === 'shines' ? 10000 : 40;
+		const lines = type === 'sparks' ? 300 : type === 'shines' ? 10000 : 60;
 		for (const direction of ['left', 'right']) {
 			for (let i = 0; i < lines; i++) {
 				const fullCircle =
@@ -61,10 +61,10 @@ export const Strobe: React.FC<{
 
 				const alphaRange =
 					type === 'rays'
-						? [0.3, 0.5]
+						? [0.3, 0.6]
 						: type === 'sparks'
 						? [0.5, 0.8]
-						: [0, 0.1];
+						: [0, 0.2];
 
 				context.globalAlpha =
 					interpolate(opacityNoise.noise2D(0, i / 2000), [-1, 1], alphaRange) *
@@ -77,19 +77,24 @@ export const Strobe: React.FC<{
 					type === 'shines'
 						? 0
 						: interpolate(
-								positionNoise.noise2D(0, i / 10),
+								positionNoise.noise2D(0, i / 2),
 								[-1, 1],
-								[-Math.PI * 0.07, Math.PI * 0.07]
+								[-Math.PI * 0.05, Math.PI * 0.05]
 						  );
 
+				const finalRadius = type === 'rays' ? 0.5 : 1;
+
+				const spreadRadius = interpolate(progress, [0, 1], [0.6, finalRadius]);
+
 				let rotation =
-					interpolate(i, [0, lines], [0, Math.PI * 0.6]) +
-					Math.PI * 0.2 +
+					interpolate(i, [0, lines], [-spreadRadius, spreadRadius]) +
+					Math.PI / 2 +
 					rotationNoise;
 
 				if (direction === 'right') {
 					rotation += Math.PI;
 				}
+				rotation -= 0;
 				const sparkOffset = Math.max(
 					0,
 					interpolate(
