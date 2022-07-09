@@ -18,9 +18,12 @@ const FULL_DETAILS = false;
 
 export const Strobe: React.FC<{
 	type: 'shines' | 'rays' | 'sparks';
-}> = ({type}) => {
+	color1: string;
+	color2: string;
+	width: number;
+}> = ({type, width, color1, color2}) => {
 	const ref = useRef<HTMLCanvasElement>(null);
-	const {width, height, fps} = useVideoConfig();
+	const {height, fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 
 	const progress = spring({
@@ -30,6 +33,7 @@ export const Strobe: React.FC<{
 			mass: 3,
 			damping: 200,
 		},
+		durationInFrames: 10,
 	});
 
 	useEffect(() => {
@@ -44,7 +48,7 @@ export const Strobe: React.FC<{
 			for (let i = 0; i < lines; i++) {
 				const fullCircle =
 					Math.sqrt(width * width + height * height) *
-					(0.7 + interpolate(random(`progress-${i}`), [0, 1], [-0.1, 0.1])) *
+					(0.5 + interpolate(random(`progress-${i}`), [0, 1], [-0.1, 0.1])) *
 					progress;
 				const alpha = interpolate(
 					blurNoise.noise2D(0, i),
@@ -56,7 +60,7 @@ export const Strobe: React.FC<{
 						? interpolateColors(
 								colorNoise.noise2D(0, i / 20),
 								[-1.5, 1],
-								['#4bb6ab', '#6af1e1']
+								[color1, color2]
 						  )
 						: 'white';
 				if (FULL_DETAILS) {
@@ -68,22 +72,28 @@ export const Strobe: React.FC<{
 						context.filter = 'blur(2px)';
 					}
 				}
+
+				const opacityGradient = interpolate(
+					i,
+					[0, lines / 2, lines],
+					[0, 1, 0]
+				);
+
 				const alphaRange =
 					type === 'rays'
 						? [0.2, 0.8]
 						: type === 'sparks'
 						? [0.5, 0.8]
 						: [0.1, 0.13];
-				context.globalAlpha = interpolate(
-					opacityNoise.noise2D(0, i / 10),
-					[-1, 1],
-					alphaRange
-				);
-				context.fillStyle = `${color}`;
+
+				context.globalAlpha =
+					interpolate(opacityNoise.noise2D(0, i / 10), [-1, 1], alphaRange) *
+					opacityGradient;
+				context.fillStyle = color;
 				context.beginPath();
 				let rotation =
-					interpolate(i, [0, lines], [0, Math.PI * 0.5]) -
-					Math.PI * 0.75 +
+					interpolate(i, [0, lines], [0, Math.PI * 0.6]) +
+					Math.PI * 0.2 +
 					interpolate(
 						positionNoise.noise2D(0, i / 10),
 						[-1, 1],
@@ -105,14 +115,17 @@ export const Strobe: React.FC<{
 				if (type === 'sparks' && sparkOffset === 0) {
 					continue;
 				}
+				const centerX = width / 2;
+				const centerY = height * 0.59;
+
 				const startRadius = type === 'sparks' ? sparkOffset : 0;
 				const endRadius = type === 'sparks' ? sparkOffset + 30 : fullCircle;
-				const startX = Math.sin(rotation) * startRadius + width / 2;
-				const startY = Math.cos(rotation) * startRadius + height / 2;
-				const edgeX1 = Math.sin(rotation + alpha) * endRadius + width / 2;
-				const edgeY1 = Math.cos(rotation + alpha) * endRadius + height / 2;
-				const edgeX2 = Math.sin(rotation - alpha) * endRadius + width / 2;
-				const edgeY2 = Math.cos(rotation - alpha) * endRadius + height / 2;
+				const startX = Math.sin(rotation) * startRadius + centerX;
+				const startY = Math.cos(rotation) * startRadius + centerY;
+				const edgeX1 = Math.sin(rotation + alpha) * endRadius + centerX;
+				const edgeY1 = Math.cos(rotation + alpha) * endRadius + centerY;
+				const edgeX2 = Math.sin(rotation - alpha) * endRadius + centerX;
+				const edgeY2 = Math.cos(rotation - alpha) * endRadius + centerY;
 
 				context.moveTo(startX, startY);
 				context.lineTo(edgeX1, edgeY1);
@@ -122,7 +135,7 @@ export const Strobe: React.FC<{
 				context.closePath();
 			}
 		}
-	}, [height, width, frame, progress, type]);
+	}, [height, width, frame, progress, type, color1, color2]);
 
 	return (
 		<div>

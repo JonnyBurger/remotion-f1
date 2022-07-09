@@ -14,7 +14,9 @@ import {FontData, getOpenType} from './type';
 
 const TEXT_COLOR = '#ffffff';
 
-export const LastName: React.FC = () => {
+export const LastName: React.FC<{
+	lastName: string;
+}> = ({lastName}) => {
 	const [lastNamePath, setPath] = useState<FontData | null>(null);
 	const [handle] = useState(() => delayRender());
 	const {fps} = useVideoConfig();
@@ -28,7 +30,7 @@ export const LastName: React.FC = () => {
 	useEffect(() => {
 		getOpenType(
 			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			'VETTEL',
+			lastName,
 			{letterSpacing: 0.03}
 		)
 			.then((p) => {
@@ -38,7 +40,7 @@ export const LastName: React.FC = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [handle]);
+	}, [handle, lastName]);
 
 	return (
 		<AbsoluteFill
@@ -73,7 +75,7 @@ export const LastName: React.FC = () => {
 						</linearGradient>
 					</defs>
 					{lastNamePath.chars.map((char, i) => {
-						const delay = (random(i + 'x') * fps) / 2 + 10;
+						const delay = (random(i + 'x') * fps) / 2 + 3;
 						const opacity = interpolate(frame, [delay, delay + 2], [0, 1], {
 							extrapolateLeft: 'clamp',
 							extrapolateRight: 'clamp',

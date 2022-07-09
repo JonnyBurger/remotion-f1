@@ -3,12 +3,13 @@ import {AbsoluteFill, random, useVideoConfig} from 'remotion';
 
 type TransitionType = 'in' | 'out';
 
-export const TriangleEntrace: React.FC<{
+export const TriangleEntrance: React.FC<{
 	progress: number;
 	children: React.ReactNode;
 	type: TransitionType;
-}> = ({children, progress, type}) => {
-	const {height, width} = useVideoConfig();
+	width: number;
+}> = ({children, width, progress, type}) => {
+	const {height} = useVideoConfig();
 	const [clipId] = useState(() => String(random(null)));
 
 	const progressInDirection = type === 'in' ? progress : 1 - progress;
@@ -21,7 +22,7 @@ export const TriangleEntrace: React.FC<{
 
 	const pathOut = `
 	M ${width} ${height}
-	L ${width - 2 * progressInDirection * width} ${height}
+	L ${width - 2 * progressInDirection * width - 3} ${height}
 	L ${width} ${height - 2 * progressInDirection * height}
 	Z
 	`;

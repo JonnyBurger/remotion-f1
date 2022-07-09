@@ -1,10 +1,18 @@
-import {interpolate, random, useCurrentFrame} from 'remotion';
 import React, {useEffect, useState} from 'react';
-import {AbsoluteFill, continueRender, delayRender} from 'remotion';
+import {
+	AbsoluteFill,
+	continueRender,
+	delayRender,
+	interpolate,
+	random,
+	useCurrentFrame,
+} from 'remotion';
 import {extendViewbox} from './extend-viewbox';
 import {FontData, getOpenType} from './type';
 
-export const Num: React.FC = () => {
+export const Num: React.FC<{
+	numb: string;
+}> = ({numb}) => {
 	const frame = useCurrentFrame();
 	const [path, setPath] = useState<FontData | null>(null);
 	const [handle] = useState(() => delayRender());
@@ -14,7 +22,7 @@ export const Num: React.FC = () => {
 	useEffect(() => {
 		getOpenType(
 			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			'12'
+			numb
 		)
 			.then((p) => {
 				setPath(p);
@@ -23,7 +31,7 @@ export const Num: React.FC = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [handle]);
+	}, [handle, numb]);
 
 	const progress = interpolate(frame, [0, 40], [0, 1]);
 

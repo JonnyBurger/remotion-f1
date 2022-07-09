@@ -1,13 +1,19 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
-import {TriangleEntrace} from './TriangleEntrance';
+import {TriangleEntrance} from './TriangleEntrance';
 
-export const Entrance: React.FC = () => {
+export const Entrance: React.FC<{
+	width: number;
+}> = ({width}) => {
 	const frame = useCurrentFrame();
 
 	return (
-		<TriangleEntrace type="in" progress={interpolate(frame, [0, 30], [0, 1])}>
+		<TriangleEntrance
+			width={width}
+			type="in"
+			progress={interpolate(frame, [0, 30], [0, 1])}
+		>
 			<AbsoluteFill style={{backgroundColor: 'white'}} />
-		</TriangleEntrace>
+		</TriangleEntrance>
 	);
 };

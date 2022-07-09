@@ -1,14 +1,15 @@
-import {Composition} from 'remotion';
+import {Composition, staticFile} from 'remotion';
 import {AllStrobes} from './AllStrobes';
+import {ASTON_MARTIN} from './colors';
 import {Entrance} from './Entrance';
 import {Exit} from './Exit';
 import {FirstName} from './FirstName';
 import {Main} from './Main';
 import {Num} from './Number';
 import {RadialGradient} from './RadialGradient';
-import {SideVsSide} from './SideVsSide';
+import {SideBySide} from './SideBySide';
 import {Strobe} from './Strobe';
-import {Vettel} from './Vettel';
+import {Driver} from './Vettel';
 
 export const RemotionVideo: React.FC = () => {
 	return (
@@ -21,7 +22,10 @@ export const RemotionVideo: React.FC = () => {
 				width={1280}
 				height={720}
 				defaultProps={{
+					width: 1280,
 					type: 'shines' as const,
+					color1: ASTON_MARTIN,
+					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -32,7 +36,11 @@ export const RemotionVideo: React.FC = () => {
 				width={1280}
 				height={720}
 				defaultProps={{
+					width: 1280,
+
 					type: 'shines' as const,
+					color1: ASTON_MARTIN,
+					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -43,7 +51,11 @@ export const RemotionVideo: React.FC = () => {
 				width={1280}
 				height={720}
 				defaultProps={{
+					width: 1280,
+
 					type: 'sparks' as const,
+					color1: ASTON_MARTIN,
+					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -54,7 +66,10 @@ export const RemotionVideo: React.FC = () => {
 				width={1280}
 				height={720}
 				defaultProps={{
-					type: 'shines' as const,
+					width: 1280,
+
+					color1: ASTON_MARTIN,
+					color2: '#6af1e1',
 				}}
 			/>
 
@@ -68,7 +83,7 @@ export const RemotionVideo: React.FC = () => {
 			/>
 			<Composition
 				id="Vettel"
-				component={Vettel}
+				component={Driver}
 				durationInFrames={150}
 				height={720}
 				width={1280}
@@ -81,6 +96,52 @@ export const RemotionVideo: React.FC = () => {
 				height={720}
 				width={1280}
 				fps={30}
+				defaultProps={{
+					width: 1280,
+
+					src: staticFile('vettel.png'),
+					color1: ASTON_MARTIN,
+					color2: '#6af1e1',
+					lastName: 'VETTEL',
+					firstName: 'SEBASTIAN',
+					numb: '12',
+				}}
+			/>
+			<Composition
+				id="Luke"
+				component={Main}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+				defaultProps={{
+					width: 1280,
+
+					src: staticFile('luke.png'),
+					color1: '#ff0000',
+					color2: '#ff0034',
+					firstName: 'LUKE',
+					lastName: 'ZIRNGIBL',
+					numb: '4',
+				}}
+			/>
+			<Composition
+				id="Corey"
+				component={Main}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+				defaultProps={{
+					width: 1280,
+
+					src: staticFile('corey.png'),
+					color1: '#ff0000',
+					color2: '#ff0034',
+					firstName: 'COREY MAC GREGOR',
+					lastName: 'BOTHWELL',
+					numb: '42',
+				}}
 			/>
 			<Composition
 				id="Num"
@@ -89,6 +150,9 @@ export const RemotionVideo: React.FC = () => {
 				height={720}
 				width={1280}
 				fps={30}
+				defaultProps={{
+					numb: '4',
+				}}
 			/>
 			<Composition
 				id="Name"
@@ -115,11 +179,11 @@ export const RemotionVideo: React.FC = () => {
 				fps={30}
 			/>
 			<Composition
-				id="SideVsSide"
-				component={SideVsSide}
+				id="SideBySide"
+				component={SideBySide}
 				durationInFrames={90}
 				height={720}
-				width={1280}
+				width={1280 * 2}
 				fps={30}
 			/>
 		</>

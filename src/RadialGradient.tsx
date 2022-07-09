@@ -1,16 +1,42 @@
 import React from 'react';
-import {AbsoluteFill, useVideoConfig} from 'remotion';
+import {
+	AbsoluteFill,
+	interpolateColors,
+	spring,
+	useCurrentFrame,
+	useVideoConfig,
+} from 'remotion';
 
-export const RadialGradient: React.FC = () => {
-	const {height, width} = useVideoConfig();
+export const RadialGradient: React.FC<{
+	color1: string;
+	width: number;
+}> = ({color1, width}) => {
+	const {fps} = useVideoConfig();
+	const frame = useCurrentFrame();
+	const scale = spring({
+		fps,
+		frame: frame - 2,
+		config: {
+			mass: 23,
+			damping: 200,
+		},
+		durationInFrames: 10,
+	});
+	const {height} = useVideoConfig();
 	return (
 		<AbsoluteFill
 			style={{
 				height: width,
 				width,
 				top: -(width - height) / 2,
-				backgroundImage:
-					'radial-gradient(#6af1e165, #6af1e157 10%, #6af1e126 40%, transparent 100%)',
+				backgroundImage: `radial-gradient(${interpolateColors(
+					0.6,
+					[0, 1],
+					[
+						'transparent',
+						interpolateColors(0.2, [0, 1], [color1, 'transparent']),
+					]
+				)}, transparent ${scale * 100}%)`,
 			}}
 		/>
 	);

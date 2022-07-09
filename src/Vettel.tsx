@@ -1,11 +1,12 @@
 import React from 'react';
 import {Img, spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import {TriangleEntrace} from './TriangleEntrance';
-import vettel from './vettel.png';
+import {TriangleEntrance} from './TriangleEntrance';
 
-export const Vettel: React.FC<{
+export const Driver: React.FC<{
 	scaleMultiplier: number;
-}> = ({scaleMultiplier}) => {
+	src: string;
+	width: number;
+}> = ({scaleMultiplier, width, src}) => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 	const progress = spring({
@@ -18,15 +19,15 @@ export const Vettel: React.FC<{
 	});
 
 	return (
-		<TriangleEntrace type="in" progress={progress}>
+		<TriangleEntrance width={width} type="in" progress={progress}>
 			<Img
 				style={{
 					width: 537,
 					height: 683,
 					transform: `scale(${1.5 * scaleMultiplier}) translateY(140px)`,
 				}}
-				src={vettel}
+				src={src}
 			/>
-		</TriangleEntrace>
+		</TriangleEntrance>
 	);
 };
