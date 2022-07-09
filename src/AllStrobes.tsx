@@ -10,7 +10,7 @@ export const AllStrobes: React.FC<{
 }> = ({color1, color2, width}) => {
 	return (
 		<AbsoluteFill>
-			<Sequence from={3}>
+			<Sequence from={8}>
 				<AbsoluteFill>
 					<Strobe width={width} color1={color1} color2={color2} type="shines" />
 				</AbsoluteFill>
@@ -21,9 +21,11 @@ export const AllStrobes: React.FC<{
 					<Strobe width={width} color1={color1} color2={color2} type="sparks" />
 				</AbsoluteFill>
 			</Sequence>
-			<AbsoluteFill>
-				<RadialGradient width={width} color1={color1} />
-			</AbsoluteFill>
+			<Sequence from={8}>
+				<AbsoluteFill>
+					<RadialGradient width={width} color1={color1} />
+				</AbsoluteFill>
+			</Sequence>
 		</AbsoluteFill>
 	);
 };

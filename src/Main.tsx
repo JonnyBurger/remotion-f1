@@ -60,11 +60,9 @@ export const Main: React.FC<{
 		<TriangleEntrance width={width} type="in" progress={triangleProgress}>
 			<AbsoluteFill>
 				<TriangleEntrance width={width} type="out" progress={exit}>
-					<Sequence from={5}>
-						<AbsoluteFill style={{backgroundColor: '#111'}}>
-							<AllStrobes width={width} color1={color1} color2={color2} />
-						</AbsoluteFill>
-					</Sequence>
+					<AbsoluteFill style={{backgroundColor: '#111'}}>
+						<AllStrobes width={width} color1={color1} color2={color2} />
+					</AbsoluteFill>
 				</TriangleEntrance>
 				<Sequence from={5}>
 					<AbsoluteFill style={{opacity: scale}}>
