@@ -79,7 +79,7 @@ export const Num: React.FC<{
 					/>
 					<path d={path.path} fill={`url(#${linearGradientId})`} />
 					<path
-						stroke="rgba(255, 255, 255, 0.4)"
+						stroke="rgba(255, 255, 255, 0.9)"
 						strokeWidth={0.25}
 						fill="transparent"
 						d={path.path}

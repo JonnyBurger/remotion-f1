@@ -64,7 +64,7 @@ export const Strobe: React.FC<{
 						? [0.3, 0.6]
 						: type === 'sparks'
 						? [0.5, 0.8]
-						: [0, 0.2];
+						: [-0.03, 0.15];
 
 				context.globalAlpha =
 					interpolate(opacityNoise.noise2D(0, i / 2000), [-1, 1], alphaRange) *
