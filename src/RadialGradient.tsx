@@ -36,7 +36,7 @@ export const RadialGradient: React.FC<{
 						'transparent',
 						interpolateColors(0.2, [0, 1], [color1, 'transparent']),
 					]
-				)}, transparent ${scale * 100}%)`,
+				)}, transparent ${scale * 60}%)`,
 			}}
 		/>
 	);

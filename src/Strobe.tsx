@@ -9,7 +9,6 @@ import {
 import SimplexNoise from 'simplex-noise';
 
 const positionNoise = new SimplexNoise('position');
-const colorNoise = new SimplexNoise('color');
 const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
 
