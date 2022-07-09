@@ -127,8 +127,8 @@ export const RemotionVideo: React.FC = () => {
 				fps={30}
 				defaultProps={{
 					width: 1280,
-					src: staticFile('luke.png'),
-					color1: '#9cddff',
+					src: staticFile('jonny.png'),
+					color1: '#55c8ff',
 					firstName: 'JONNY',
 					lastName: 'BURGER',
 					numb: '13',
