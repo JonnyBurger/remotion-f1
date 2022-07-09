@@ -11,7 +11,8 @@ import {TriangleEntrance} from './TriangleEntrance';
 export const Driver: React.FC<{
 	scaleMultiplier: number;
 	src: string;
-}> = ({scaleMultiplier, src}) => {
+	imageStyle: React.CSSProperties;
+}> = ({scaleMultiplier, src, imageStyle}) => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 	const progress = spring({
@@ -26,16 +27,15 @@ export const Driver: React.FC<{
 
 	return (
 		<TriangleEntrance type="in" progress={progress}>
-			<Img
+			<div
 				style={{
-					width: 537,
-					height: 683,
 					transform: `scale(${
 						(1.6 + scaleGrowth) * scaleMultiplier
 					}) translateY(140px)`,
 				}}
-				src={src}
-			/>
+			>
+				<Img style={imageStyle} src={src} />
+			</div>
 		</TriangleEntrance>
 	);
 };
