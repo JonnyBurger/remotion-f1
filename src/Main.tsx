@@ -70,7 +70,7 @@ export const Main: React.FC<{
 					<AbsoluteFill style={{opacity: scale}}>
 						<Sequence from={5}>
 							<TriangleEntrance width={width} type="out" progress={exit}>
-								<AbsoluteFill style={{opacity: 0.4}}>
+								<AbsoluteFill style={{opacity: 0.6}}>
 									<Driver width={width} src={src} scaleMultiplier={scale} />
 								</AbsoluteFill>
 							</TriangleEntrance>

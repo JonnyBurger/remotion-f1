@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {
 	interpolate,
-	interpolateColors,
 	random,
 	spring,
 	useCurrentFrame,
@@ -13,8 +12,6 @@ const positionNoise = new SimplexNoise('position');
 const colorNoise = new SimplexNoise('color');
 const blurNoise = new SimplexNoise('blur');
 const opacityNoise = new SimplexNoise('opacity');
-
-const FULL_DETAILS = false;
 
 export const Strobe: React.FC<{
 	type: 'shines' | 'rays' | 'sparks';
@@ -30,10 +27,9 @@ export const Strobe: React.FC<{
 		fps,
 		frame,
 		config: {
-			mass: 3,
 			damping: 200,
 		},
-		durationInFrames: 10,
+		durationInFrames: 20,
 	});
 
 	useEffect(() => {
@@ -43,35 +39,20 @@ export const Strobe: React.FC<{
 		}
 		const context = current.getContext('2d') as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
-		const lines = type === 'sparks' ? 300 : type === 'shines' ? 120 : 40;
+		const lines = type === 'sparks' ? 300 : type === 'shines' ? 10000 : 40;
 		for (const direction of ['left', 'right']) {
 			for (let i = 0; i < lines; i++) {
 				const fullCircle =
 					Math.sqrt(width * width + height * height) *
-					(0.5 + interpolate(random(`progress-${i}`), [0, 1], [-0.1, 0.1])) *
+					1.5 *
+					interpolate(opacityNoise.noise2D(0, i / 2000), [0, 1], [0.8, 1]) *
+					interpolate(random(`progress-${i}`), [0, 1], [0.6, 1.5]) *
 					progress;
-				const alpha = interpolate(
-					blurNoise.noise2D(0, i),
-					[-1, 1],
-					[0, type === 'shines' ? 0.04 : 0.005]
-				);
-				const color =
+				const alpha =
 					type === 'shines'
-						? interpolateColors(
-								colorNoise.noise2D(0, i / 20),
-								[-1.5, 1],
-								[color1, color2]
-						  )
-						: 'white';
-				if (FULL_DETAILS) {
-					if (type === 'shines') {
-						context.filter = 'blur(5px)';
-					} else if (type === 'rays') {
-						context.filter = 'blur(2px)';
-					} else if (type === 'sparks') {
-						context.filter = 'blur(2px)';
-					}
-				}
+						? 0.04
+						: interpolate(blurNoise.noise2D(0, i), [-1, 1], [0, 0.005]);
+				const color = type === 'shines' ? color1 : 'white';
 
 				const opacityGradient = interpolate(
 					i,
@@ -81,24 +62,31 @@ export const Strobe: React.FC<{
 
 				const alphaRange =
 					type === 'rays'
-						? [0.2, 0.8]
+						? [0.3, 0.5]
 						: type === 'sparks'
 						? [0.5, 0.8]
-						: [0.1, 0.13];
+						: [0, 0.1];
 
 				context.globalAlpha =
-					interpolate(opacityNoise.noise2D(0, i / 10), [-1, 1], alphaRange) *
+					interpolate(opacityNoise.noise2D(0, i / 2000), [-1, 1], alphaRange) *
 					opacityGradient;
 				context.fillStyle = color;
+				context.strokeStyle = color;
 				context.beginPath();
+
+				const rotationNoise =
+					type === 'shines'
+						? 0
+						: interpolate(
+								positionNoise.noise2D(0, i / 10),
+								[-1, 1],
+								[-Math.PI * 0.07, Math.PI * 0.07]
+						  );
+
 				let rotation =
 					interpolate(i, [0, lines], [0, Math.PI * 0.6]) +
 					Math.PI * 0.2 +
-					interpolate(
-						positionNoise.noise2D(0, i / 10),
-						[-1, 1],
-						[-Math.PI * 0.07, Math.PI * 0.07]
-					);
+					rotationNoise;
 
 				if (direction === 'right') {
 					rotation += Math.PI;
@@ -124,14 +112,18 @@ export const Strobe: React.FC<{
 				const startY = Math.cos(rotation) * startRadius + centerY;
 				const edgeX1 = Math.sin(rotation + alpha) * endRadius + centerX;
 				const edgeY1 = Math.cos(rotation + alpha) * endRadius + centerY;
+
 				const edgeX2 = Math.sin(rotation - alpha) * endRadius + centerX;
 				const edgeY2 = Math.cos(rotation - alpha) * endRadius + centerY;
 
 				context.moveTo(startX, startY);
 				context.lineTo(edgeX1, edgeY1);
 				context.lineTo(edgeX2, edgeY2);
-
-				context.fill();
+				if (type === 'rays') {
+					context.fill();
+				} else {
+					context.stroke();
+				}
 				context.closePath();
 			}
 		}
