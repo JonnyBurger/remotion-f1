@@ -6,6 +6,7 @@ import {
 	interpolate,
 	interpolateColors,
 	random,
+	staticFile,
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
@@ -28,11 +29,7 @@ export const LastName: React.FC<{
 	const op2 = interpolate(progress, [0.5, 1], [0, 1]);
 
 	useEffect(() => {
-		getOpenType(
-			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			lastName,
-			{letterSpacing: 0.03}
-		)
+		getOpenType(staticFile('bold.otf'), lastName, {letterSpacing: 0.03})
 			.then((p) => {
 				setPath(p);
 				continueRender(handle);

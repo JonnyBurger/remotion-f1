@@ -5,6 +5,7 @@ import {
 	delayRender,
 	interpolate,
 	random,
+	staticFile,
 	useCurrentFrame,
 } from 'remotion';
 import {extendViewbox} from './extend-viewbox';
@@ -20,10 +21,7 @@ export const Num: React.FC<{
 	const [linearGradientId] = useState(() => random(null) + 'hi');
 
 	useEffect(() => {
-		getOpenType(
-			'https://jonnyburger.s3.eu-central-1.amazonaws.com/Formula1-Bold.otf',
-			numb
-		)
+		getOpenType(staticFile('bold.otf'), numb)
 			.then((p) => {
 				setPath(p);
 				continueRender(handle);
