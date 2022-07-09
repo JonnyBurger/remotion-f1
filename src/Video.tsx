@@ -140,8 +140,8 @@ export const RemotionVideo: React.FC = () => {
 					lastName: 'BURGER',
 					numb: '13',
 					imageStyle: {
-						width: 350,
-						marginTop: -130,
+						width: 400,
+						marginTop: -40,
 						marginLeft: -40,
 						transform: `rotate(-4deg)`,
 					},
