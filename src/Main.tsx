@@ -8,11 +8,11 @@ import {
 	useVideoConfig,
 } from 'remotion';
 import {AllStrobes} from './AllStrobes';
+import {Driver} from './Driver';
 import {FirstName} from './FirstName';
 import {LastName} from './LastName';
 import {Num} from './Number';
 import {TriangleEntrance} from './TriangleEntrance';
-import {Driver} from './Vettel';
 
 export const Main: React.FC<{
 	src: string;
@@ -73,71 +73,77 @@ export const Main: React.FC<{
 	const scale = interpolate(centerZoom, [0, 1], [0.8, 0.9]) + constantScale;
 
 	return (
-		<TriangleEntrance progress={nameExitDelayed} type="out" width={width}>
-			<TriangleEntrance width={width} type="in" progress={triangleProgress}>
+		<TriangleEntrance progress={nameExitDelayed} type="out">
+			<TriangleEntrance type="in" progress={triangleProgress}>
 				<AbsoluteFill>
-					<TriangleEntrance width={width} type="out" progress={exit}>
+					<TriangleEntrance type="out" progress={exit}>
 						<AbsoluteFill style={{backgroundColor: '#111'}}>
 							<AllStrobes width={width} color1={color1} color2={color2} />
 						</AbsoluteFill>
 					</TriangleEntrance>
 					<Sequence from={5}>
-						<AbsoluteFill style={{opacity: scale}}>
-							<Sequence from={5}>
-								<TriangleEntrance width={width} type="out" progress={exit}>
-									<AbsoluteFill style={{opacity: 0.6}}>
-										<Driver width={width} src={src} scaleMultiplier={scale} />
-									</AbsoluteFill>
-								</TriangleEntrance>
-							</Sequence>
+						<Sequence from={5}>
+							<TriangleEntrance type="out" progress={exit}>
+								<AbsoluteFill style={{opacity: 0.6}}>
+									<Driver src={src} scaleMultiplier={1} />
+								</AbsoluteFill>
+							</TriangleEntrance>
+						</Sequence>
+						<AbsoluteFill
+							style={{
+								transform: `scale(${centerZoom})`,
+								opacity: 0.8,
+							}}
+						>
+							<Num numb={numb} />
+						</AbsoluteFill>
+						<TriangleEntrance progress={nameExit} type="out">
 							<AbsoluteFill
 								style={{
 									transform: `scale(${centerZoom})`,
-									opacity: 0.8,
 								}}
 							>
 								<Num numb={numb} />
 							</AbsoluteFill>
-							<TriangleEntrance progress={nameExit} type="out" width={width}>
-								<AbsoluteFill
-									style={{
-										transform: `scale(${centerZoom})`,
-									}}
-								>
-									<Num numb={numb} />
+						</TriangleEntrance>
+						<TriangleEntrance progress={nameExit} type="out">
+							<AbsoluteFill
+								style={{
+									transform: `scale(${centerZoom})`,
+								}}
+							>
+								<Num numb={numb} />
+							</AbsoluteFill>
+						</TriangleEntrance>
+						<Sequence from={10}>
+							<TriangleEntrance type="out" progress={exit}>
+								<AbsoluteFill>
+									<Driver src={src} scaleMultiplier={1} />
 								</AbsoluteFill>
 							</TriangleEntrance>
-							<TriangleEntrance progress={nameExit} type="out" width={width}>
-								<AbsoluteFill
-									style={{
-										transform: `scale(${centerZoom})`,
-									}}
-								>
-									<Num numb={numb} />
-								</AbsoluteFill>
-							</TriangleEntrance>
-							<Sequence from={10}>
-								<TriangleEntrance width={width} type="out" progress={exit}>
-									<AbsoluteFill>
-										<Driver width={width} src={src} scaleMultiplier={scale} />
-									</AbsoluteFill>
-								</TriangleEntrance>
-							</Sequence>
-							<TriangleEntrance width={width} progress={exit} type="out">
-								<AbsoluteFill
-									style={{transform: `scale(${centerZoom + textScale})`}}
-								>
-									<FirstName firstName={firstName} />
-								</AbsoluteFill>
-							</TriangleEntrance>
-							<TriangleEntrance type="out" width={width} progress={nameExit}>
-								<AbsoluteFill
-									style={{transform: `scale(${centerZoom + textScale})`}}
-								>
-									<LastName lastName={lastName} />
-								</AbsoluteFill>
-							</TriangleEntrance>
+						</Sequence>
+						<TriangleEntrance progress={exit} type="out">
+							<AbsoluteFill
+								style={{transform: `scale(${centerZoom + textScale})`}}
+							>
+								<FirstName firstName={firstName} />
+							</AbsoluteFill>
+						</TriangleEntrance>
+						<AbsoluteFill
+							style={{
+								transform: `scale(${centerZoom + textScale})`,
+								opacity: 0.8,
+							}}
+						>
+							<LastName lastName={lastName} />
 						</AbsoluteFill>
+						<TriangleEntrance type="out" progress={nameExit}>
+							<AbsoluteFill
+								style={{transform: `scale(${centerZoom + textScale})`}}
+							>
+								<LastName lastName={lastName} />
+							</AbsoluteFill>
+						</TriangleEntrance>
 					</Sequence>
 				</AbsoluteFill>
 			</TriangleEntrance>

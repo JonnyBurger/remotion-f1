@@ -51,7 +51,7 @@ export const Num: React.FC<{
 				<svg
 					style={{
 						height: 450,
-						marginTop: -100,
+						marginTop: -140,
 					}}
 					viewBox={extendViewbox(
 						`${path.boundingBox.x1} ${path.boundingBox.y1} ${

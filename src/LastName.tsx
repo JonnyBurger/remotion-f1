@@ -75,7 +75,7 @@ export const LastName: React.FC<{
 						</linearGradient>
 					</defs>
 					{lastNamePath.chars.map((char, i) => {
-						const delay = (random(i + 'x') * fps) / 2 + 3;
+						const delay = (random(i + 'x') * fps) / 4;
 						const opacity = interpolate(frame, [delay, delay + 2], [0, 1], {
 							extrapolateLeft: 'clamp',
 							extrapolateRight: 'clamp',

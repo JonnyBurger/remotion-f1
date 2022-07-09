@@ -38,7 +38,7 @@ export const Strobe: React.FC<{
 		}
 		const context = current.getContext('2d') as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
-		const lines = type === 'sparks' ? 300 : type === 'shines' ? 10000 : 60;
+		const lines = type === 'sparks' ? 600 : type === 'shines' ? 10000 : 60;
 		for (const direction of ['left', 'right']) {
 			for (let i = 0; i < lines; i++) {
 				const fullCircle =

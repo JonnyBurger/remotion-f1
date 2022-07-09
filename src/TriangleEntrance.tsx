@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
-import {AbsoluteFill, random, useVideoConfig} from 'remotion';
-
-type TransitionType = 'in' | 'out';
+import React, {useRef, useState} from 'react';
+import {AbsoluteFill, random} from 'remotion';
 
 export const TriangleEntrance: React.FC<{
 	progress: number;
 	children: React.ReactNode;
-	type: TransitionType;
-	width: number;
-}> = ({children, width, progress, type}) => {
-	const {height} = useVideoConfig();
+	type: 'in' | 'out';
+}> = ({children, progress, type}) => {
+	const ref = useRef<SVGSVGElement>(null);
+	const width = 1;
+	const height = 1;
 	const [clipId] = useState(() => String(random(null)));
 
 	const progressInDirection = type === 'in' ? progress : 1 - progress;
@@ -22,7 +21,7 @@ export const TriangleEntrance: React.FC<{
 
 	const pathOut = `
 	M ${width} ${height}
-	L ${width - 2 * progressInDirection * width - 3} ${height}
+	L ${width - 2 * progressInDirection * width} ${height}
 	L ${width} ${height - 2 * progressInDirection * height}
 	Z
 	`;
@@ -33,6 +32,8 @@ export const TriangleEntrance: React.FC<{
 		<AbsoluteFill>
 			<AbsoluteFill
 				style={{
+					width: '100%',
+					height: '100%',
 					justifyContent: 'center',
 					alignItems: 'center',
 					clipPath: `url(#${clipId})`,
@@ -41,9 +42,16 @@ export const TriangleEntrance: React.FC<{
 				{children}
 			</AbsoluteFill>
 			<AbsoluteFill>
-				<svg viewBox={`0 0 ${width} ${height}`} width={0} height={0}>
+				<svg
+					ref={ref}
+					viewBox={`0 0 ${width} ${height}`}
+					style={{
+						width: '100%',
+						height: '100%',
+					}}
+				>
 					<defs>
-						<clipPath id={clipId}>
+						<clipPath id={clipId} clipPathUnits="objectBoundingBox">
 							<path d={path} fill="red" />
 						</clipPath>
 					</defs>

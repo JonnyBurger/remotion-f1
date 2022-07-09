@@ -1,6 +1,7 @@
 import {Composition, staticFile} from 'remotion';
 import {AllStrobes} from './AllStrobes';
 import {ASTON_MARTIN} from './colors';
+import {Driver} from './Driver';
 import {Entrance} from './Entrance';
 import {Exit} from './Exit';
 import {FirstName} from './FirstName';
@@ -9,7 +10,6 @@ import {Num} from './Number';
 import {RadialGradient} from './RadialGradient';
 import {SideBySide} from './SideBySide';
 import {Strobe} from './Strobe';
-import {Driver} from './Vettel';
 
 export const RemotionVideo: React.FC = () => {
 	return (
