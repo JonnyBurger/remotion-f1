@@ -17,12 +17,16 @@ export const SideBySide: React.FC = () => {
 				<AbsoluteFill style={{width: width / 2, height}}>
 					<Main
 						{...{
-							width: width / 2,
+							width: 1280,
 							src: staticFile('vettel.png'),
 							color1: ASTON_MARTIN,
 							lastName: 'VETTEL',
 							firstName: 'SEBASTIAN',
 							numb: '12',
+							imageStyle: {
+								width: 537,
+								height: 683,
+							},
 						}}
 					/>
 				</AbsoluteFill>

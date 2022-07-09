@@ -94,12 +94,15 @@ export const RemotionVideo: React.FC = () => {
 				fps={30}
 				defaultProps={{
 					width: 1280,
-
 					src: staticFile('vettel.png'),
 					color1: ASTON_MARTIN,
 					lastName: 'VETTEL',
 					firstName: 'SEBASTIAN',
 					numb: '12',
+					imageStyle: {
+						width: 537,
+						height: 683,
+					},
 				}}
 			/>
 			<Composition
@@ -116,6 +119,10 @@ export const RemotionVideo: React.FC = () => {
 					firstName: 'LUKE',
 					lastName: 'ZIRNGIBL',
 					numb: '4',
+					imageStyle: {
+						width: 537,
+						height: 683,
+					},
 				}}
 			/>
 			<Composition
@@ -132,6 +139,12 @@ export const RemotionVideo: React.FC = () => {
 					firstName: 'JONNY',
 					lastName: 'BURGER',
 					numb: '13',
+					imageStyle: {
+						width: 350,
+						marginTop: -130,
+						marginLeft: -40,
+						transform: `rotate(-4deg)`,
+					},
 				}}
 			/>
 			<Composition
@@ -149,6 +162,10 @@ export const RemotionVideo: React.FC = () => {
 					firstName: 'COREY MAC GREGOR',
 					lastName: 'BOTHWELL',
 					numb: '42',
+					imageStyle: {
+						width: 537,
+						height: 683,
+					},
 				}}
 			/>
 			<Composition

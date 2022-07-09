@@ -21,7 +21,8 @@ export const Main: React.FC<{
 	lastName: string;
 	numb: string;
 	width: number;
-}> = ({src, color1, width, numb, firstName, lastName}) => {
+	imageStyle: React.CSSProperties;
+}> = ({src, color1, width, numb, firstName, lastName, imageStyle}) => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 	const triangleProgress = spring({
@@ -98,14 +99,22 @@ export const Main: React.FC<{
 						<Sequence from={5}>
 							<TriangleEntrance type="out" progress={exit}>
 								<AbsoluteFill style={{opacity: 0.85}}>
-									<Driver src={src} scaleMultiplier={1} />
+									<Driver
+										imageStyle={imageStyle}
+										src={src}
+										scaleMultiplier={1}
+									/>
 								</AbsoluteFill>
 							</TriangleEntrance>
 						</Sequence>
 						<Sequence from={10}>
 							<TriangleEntrance type="out" progress={exit}>
 								<AbsoluteFill>
-									<Driver src={src} scaleMultiplier={1} />
+									<Driver
+										imageStyle={imageStyle}
+										src={src}
+										scaleMultiplier={1}
+									/>
 								</AbsoluteFill>
 							</TriangleEntrance>
 						</Sequence>
