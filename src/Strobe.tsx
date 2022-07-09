@@ -166,9 +166,8 @@ const getOpacity = (type: Type, index: number, direction: string) => {
 export const Strobe: React.FC<{
 	type: Type;
 	color1: string;
-	color2: string;
 	width: number;
-}> = ({type, width, color1, color2}) => {
+}> = ({type, width, color1}) => {
 	const ref = useRef<HTMLCanvasElement>(null);
 	const {height, fps} = useVideoConfig();
 	const frame = useCurrentFrame();
@@ -249,7 +248,7 @@ export const Strobe: React.FC<{
 				context.closePath();
 			}
 		}
-	}, [height, width, frame, progress, type, color1, color2]);
+	}, [height, width, frame, progress, type, color1]);
 
 	return (
 		<div>

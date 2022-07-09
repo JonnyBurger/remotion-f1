@@ -17,12 +17,11 @@ import {TriangleEntrance} from './TriangleEntrance';
 export const Main: React.FC<{
 	src: string;
 	color1: string;
-	color2: string;
 	firstName: string;
 	lastName: string;
 	numb: string;
 	width: number;
-}> = ({src, color1, width, numb, color2, firstName, lastName}) => {
+}> = ({src, color1, width, numb, firstName, lastName}) => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 	const triangleProgress = spring({
@@ -75,7 +74,7 @@ export const Main: React.FC<{
 				<AbsoluteFill>
 					<TriangleEntrance type="out" progress={exit}>
 						<AbsoluteFill style={{backgroundColor: '#111'}}>
-							<AllStrobes width={width} color1={color1} color2={color2} />
+							<AllStrobes width={width} color1={color1} />
 						</AbsoluteFill>
 					</TriangleEntrance>
 					<Sequence from={5}>

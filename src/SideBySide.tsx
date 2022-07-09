@@ -20,7 +20,6 @@ export const SideBySide: React.FC = () => {
 							width: width / 2,
 							src: staticFile('vettel.png'),
 							color1: ASTON_MARTIN,
-							color2: '#6af1e1',
 							lastName: 'VETTEL',
 							firstName: 'SEBASTIAN',
 							numb: '12',

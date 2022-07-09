@@ -25,7 +25,6 @@ export const RemotionVideo: React.FC = () => {
 					width: 1280,
 					type: 'shines' as const,
 					color1: ASTON_MARTIN,
-					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -40,7 +39,6 @@ export const RemotionVideo: React.FC = () => {
 
 					type: 'shines' as const,
 					color1: ASTON_MARTIN,
-					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -55,7 +53,6 @@ export const RemotionVideo: React.FC = () => {
 
 					type: 'sparks' as const,
 					color1: ASTON_MARTIN,
-					color2: '#6af1e1',
 				}}
 			/>
 			<Composition
@@ -69,7 +66,6 @@ export const RemotionVideo: React.FC = () => {
 					width: 1280,
 
 					color1: ASTON_MARTIN,
-					color2: '#6af1e1',
 				}}
 			/>
 
@@ -101,7 +97,6 @@ export const RemotionVideo: React.FC = () => {
 
 					src: staticFile('vettel.png'),
 					color1: ASTON_MARTIN,
-					color2: '#6af1e1',
 					lastName: 'VETTEL',
 					firstName: 'SEBASTIAN',
 					numb: '12',
@@ -116,13 +111,27 @@ export const RemotionVideo: React.FC = () => {
 				fps={30}
 				defaultProps={{
 					width: 1280,
-
 					src: staticFile('luke.png'),
 					color1: '#ff0000',
-					color2: '#ff0034',
 					firstName: 'LUKE',
 					lastName: 'ZIRNGIBL',
 					numb: '4',
+				}}
+			/>
+			<Composition
+				id="Jonny"
+				component={Main}
+				durationInFrames={90}
+				height={720}
+				width={1280}
+				fps={30}
+				defaultProps={{
+					width: 1280,
+					src: staticFile('luke.png'),
+					color1: '#9cddff',
+					firstName: 'JONNY',
+					lastName: 'BURGER',
+					numb: '13',
 				}}
 			/>
 			<Composition
@@ -137,7 +146,6 @@ export const RemotionVideo: React.FC = () => {
 
 					src: staticFile('corey.png'),
 					color1: '#ff0000',
-					color2: '#ff0034',
 					firstName: 'COREY MAC GREGOR',
 					lastName: 'BOTHWELL',
 					numb: '42',
