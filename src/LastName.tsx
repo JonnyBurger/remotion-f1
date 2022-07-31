@@ -51,7 +51,7 @@ export const LastName: React.FC<{
 	return (
 		<AbsoluteFill
 			style={{
-				filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.3))',
+				filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.8))',
 				paddingTop: 535,
 			}}
 		>

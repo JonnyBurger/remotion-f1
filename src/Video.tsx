@@ -1,5 +1,6 @@
 import {Composition, staticFile} from 'remotion';
 import {AllStrobes} from './AllStrobes';
+import {AllStrobesSkia} from './AllStrobesSkia';
 import {ASTON_MARTIN} from './colors';
 import {Driver} from './Driver';
 import {Entrance} from './Entrance';
@@ -64,7 +65,18 @@ export const RemotionVideo: React.FC = () => {
 				height={720}
 				defaultProps={{
 					width: 1280,
-
+					color1: ASTON_MARTIN,
+				}}
+			/>
+			<Composition
+				id="AllStrobesSkia"
+				component={AllStrobesSkia}
+				durationInFrames={180}
+				fps={30}
+				width={1280}
+				height={720}
+				defaultProps={{
+					width: 1280,
 					color1: ASTON_MARTIN,
 				}}
 			/>
@@ -135,7 +147,7 @@ export const RemotionVideo: React.FC = () => {
 				defaultProps={{
 					width: 1280,
 					src: staticFile('jonny.png'),
-					color1: '#55c8ff',
+					color1: '#ffe168',
 					firstName: 'JONNY',
 					lastName: 'BURGER',
 					numb: '13',

@@ -1,3 +1,4 @@
+import {enableSkia} from '@remotion/skia/enable';
 import {Config} from 'remotion';
 
 Config.Rendering.setImageFormat('jpeg');
@@ -7,3 +8,5 @@ Config.Rendering.setImageFormat('png');
 Config.Output.setPixelFormat('yuva444p10le');
 Config.Output.setCodec('prores');
 Config.Output.setProResProfile('4444');
+
+Config.Bundling.overrideWebpackConfig((config) => enableSkia(config));

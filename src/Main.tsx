@@ -7,7 +7,7 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {AllStrobes} from './AllStrobes';
+import {AllStrobesSkia} from './AllStrobesSkia';
 import {Driver} from './Driver';
 import {FirstName} from './FirstName';
 import {LastName} from './LastName';
@@ -75,7 +75,7 @@ export const Main: React.FC<{
 				<AbsoluteFill>
 					<TriangleEntrance type="out" progress={exit}>
 						<AbsoluteFill style={{backgroundColor: '#111'}}>
-							<AllStrobes width={width} color1={color1} />
+							<AllStrobesSkia width={width} color1={color1} />
 						</AbsoluteFill>
 					</TriangleEntrance>
 					<Sequence from={5}>

@@ -39,7 +39,7 @@ export const FirstName: React.FC<{
 	return (
 		<AbsoluteFill
 			style={{
-				filter: 'drop-shadow(0 0 15px rgba(0,0,0,1))',
+				filter: 'drop-shadow(0 0 40px rgba(0,0,0,1))',
 				paddingTop: 490,
 			}}
 		>
