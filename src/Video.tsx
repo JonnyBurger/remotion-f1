@@ -5,6 +5,7 @@ import {RadialGradient} from './background/RadialGradient';
 import {Strobe} from './background/Strobe';
 import {Driver} from './foreground/Driver';
 import {FirstName} from './foreground/FirstName';
+import {LastName} from './foreground/LastName';
 import {Num} from './foreground/Number';
 import {ASTON_MARTIN} from './helpers/colors';
 import {Main} from './Main';
@@ -135,12 +136,26 @@ export const RemotionVideo: React.FC = () => {
 					}}
 				/>
 				<Composition
-					id="Name"
+					id="FirstName"
 					component={FirstName}
 					durationInFrames={90}
 					height={720}
 					width={1280}
 					fps={30}
+					defaultProps={{
+						firstName: 'JONNY',
+					}}
+				/>
+				<Composition
+					id="LastName"
+					component={LastName}
+					durationInFrames={90}
+					height={720}
+					width={1280}
+					fps={30}
+					defaultProps={{
+						lastName: 'BURGER',
+					}}
 				/>
 			</Folder>
 			<Folder name="Transitions">
