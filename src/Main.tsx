@@ -4,14 +4,14 @@ import {
 	interpolate,
 	Sequence,
 	spring,
-	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {AllStrobesSkia} from './background/AllStrobesSkia';
+import {AllStrobes} from './background/AllStrobes';
 import {Driver} from './foreground/Driver';
 import {FirstName} from './foreground/FirstName';
 import {LastName} from './foreground/LastName';
 import {Num} from './foreground/Number';
+import {Layer} from './helpers/layer';
 import {TriangleEntrance} from './transition/TriangleEntrance';
 
 export const Main: React.FC<{
@@ -24,7 +24,7 @@ export const Main: React.FC<{
 	imageStyle: React.CSSProperties;
 }> = ({src, color1, width, numb, firstName, lastName, imageStyle}) => {
 	const {fps} = useVideoConfig();
-	const frame = useCurrentFrame();
+	const frame = 32;
 	const triangleProgress = spring({
 		fps,
 		frame,
@@ -70,15 +70,21 @@ export const Main: React.FC<{
 	const textScale = interpolate(frame, [0, 100], [0, 0.02]);
 
 	return (
-		<TriangleEntrance progress={nameExitDelayed} type="out">
-			<TriangleEntrance type="in" progress={triangleProgress}>
-				<AbsoluteFill>
-					<TriangleEntrance type="out" progress={exit}>
-						<AbsoluteFill style={{backgroundColor: '#111'}}>
-							<AllStrobesSkia width={width} color1={color1} />
-						</AbsoluteFill>
-					</TriangleEntrance>
-					<Sequence from={5}>
+		<AbsoluteFill style={{}}>
+			<AbsoluteFill>
+				<TriangleEntrance type="out" progress={exit}>
+					<AbsoluteFill style={{backgroundColor: '#111'}}>
+						<AllStrobes width={width} color1={color1} />
+					</AbsoluteFill>
+				</TriangleEntrance>
+				<Sequence
+					from={0}
+					style={{
+						perspective: 2000,
+						perspectiveOrigin: 'center center',
+					}}
+				>
+					<Layer level={3}>
 						<AbsoluteFill
 							style={{
 								transform: `scale(${centerZoom})`,
@@ -87,37 +93,16 @@ export const Main: React.FC<{
 						>
 							<Num numb={numb} />
 						</AbsoluteFill>
-						<TriangleEntrance progress={nameExit} type="out">
-							<AbsoluteFill
-								style={{
-									transform: `scale(${centerZoom})`,
-								}}
-							>
-								<Num numb={numb} />
+					</Layer>
+					<Layer level={2}>
+						<TriangleEntrance type="out" progress={exit}>
+							<AbsoluteFill>
+								<Driver imageStyle={imageStyle} src={src} scaleMultiplier={1} />
 							</AbsoluteFill>
 						</TriangleEntrance>
-						<Sequence from={5}>
-							<TriangleEntrance type="out" progress={exit}>
-								<AbsoluteFill style={{opacity: 0.85}}>
-									<Driver
-										imageStyle={imageStyle}
-										src={src}
-										scaleMultiplier={1}
-									/>
-								</AbsoluteFill>
-							</TriangleEntrance>
-						</Sequence>
-						<Sequence from={10}>
-							<TriangleEntrance type="out" progress={exit}>
-								<AbsoluteFill>
-									<Driver
-										imageStyle={imageStyle}
-										src={src}
-										scaleMultiplier={1}
-									/>
-								</AbsoluteFill>
-							</TriangleEntrance>
-						</Sequence>
+					</Layer>
+
+					<Layer level={1}>
 						<TriangleEntrance progress={exit} type="out">
 							<AbsoluteFill
 								style={{transform: `scale(${centerZoom + textScale})`}}
@@ -125,14 +110,8 @@ export const Main: React.FC<{
 								<FirstName firstName={firstName} />
 							</AbsoluteFill>
 						</TriangleEntrance>
-						<AbsoluteFill
-							style={{
-								transform: `scale(${centerZoom + textScale})`,
-								opacity: 0.8,
-							}}
-						>
-							<LastName lastName={lastName} />
-						</AbsoluteFill>
+					</Layer>
+					<Layer level={0}>
 						<TriangleEntrance type="out" progress={nameExit}>
 							<AbsoluteFill
 								style={{transform: `scale(${centerZoom + textScale})`}}
@@ -140,9 +119,9 @@ export const Main: React.FC<{
 								<LastName lastName={lastName} />
 							</AbsoluteFill>
 						</TriangleEntrance>
-					</Sequence>
-				</AbsoluteFill>
-			</TriangleEntrance>
-		</TriangleEntrance>
+					</Layer>
+				</Sequence>
+			</AbsoluteFill>
+		</AbsoluteFill>
 	);
 };

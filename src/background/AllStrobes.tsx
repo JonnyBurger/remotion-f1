@@ -1,5 +1,6 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, Sequence, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, interpolate, Sequence} from 'remotion';
+import {Layer} from '../helpers/layer';
 import {RadialGradient} from './RadialGradient';
 import {Strobe} from './Strobe';
 
@@ -7,7 +8,7 @@ export const AllStrobes: React.FC<{
 	color1: string;
 	width: number;
 }> = ({color1, width}) => {
-	const frame = useCurrentFrame();
+	const frame = 32;
 	const fadeOut = interpolate(frame, [32, 50], [1, 0.4], {
 		extrapolateRight: 'clamp',
 		extrapolateLeft: 'clamp',
@@ -15,24 +16,36 @@ export const AllStrobes: React.FC<{
 
 	return (
 		<AbsoluteFill style={{opacity: fadeOut}}>
-			<Sequence from={8}>
-				<AbsoluteFill>
+			<AbsoluteFill
+				style={{
+					perspective: 2000,
+				}}
+			>
+				<Layer level={8}>
+					<AbsoluteFill>
+						<RadialGradient width={width} color1={color1} />
+					</AbsoluteFill>
+				</Layer>
+			</AbsoluteFill>
+
+			<Sequence
+				from={0}
+				style={{
+					perspective: 2000,
+				}}
+			>
+				<Layer level={7}>
 					<Strobe width={width} color1={color1} type="shines" />
-				</AbsoluteFill>
-				<AbsoluteFill>
+				</Layer>
+				<Layer level={6}>
 					<Strobe width={width} color1={color1} type="rays" />
-				</AbsoluteFill>
-				<AbsoluteFill>
+				</Layer>
+				<Layer level={5}>
 					<Strobe width={width} color1={color1} type="sparks" />
-				</AbsoluteFill>
-				<AbsoluteFill>
+				</Layer>
+				<Layer level={4}>
 					<Strobe width={width} color1={color1} type="white-base" />
-				</AbsoluteFill>
-			</Sequence>
-			<Sequence from={8}>
-				<AbsoluteFill>
-					<RadialGradient width={width} color1={color1} />
-				</AbsoluteFill>
+				</Layer>
 			</Sequence>
 		</AbsoluteFill>
 	);
