@@ -10,3 +10,4 @@ Config.Output.setCodec('prores');
 Config.Output.setProResProfile('4444');
 
 Config.Bundling.overrideWebpackConfig((config) => enableSkia(config));
+Config.Rendering.setConcurrency(1);

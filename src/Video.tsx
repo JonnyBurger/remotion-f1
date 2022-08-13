@@ -251,15 +251,15 @@ export const RemotionVideo: React.FC = () => {
 					fps={30}
 					defaultProps={{
 						width: 1280,
-
 						src: staticFile('corey.png'),
-						color1: '#e67e22',
+						color1: '#ff0000',
 						firstName: 'COREY MAC GREGOR',
 						lastName: 'BOTHWELL',
 						numb: '42',
 						imageStyle: {
 							width: 537,
 							height: 683,
+							transform: `scale(1.3) translateX(30px) translateY(100px)`,
 						},
 					}}
 				/>
