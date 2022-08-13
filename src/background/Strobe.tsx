@@ -186,7 +186,7 @@ export const Strobe: React.FC<{
 		if (!current) {
 			return;
 		}
-		const context = current.getContext('2d') as CanvasRenderingContext2D;
+		const context = current.getContext('2d', {}) as CanvasRenderingContext2D;
 		context.clearRect(0, 0, width, height);
 		const lines = getAmountOfLines(type);
 		for (const direction of ['left', 'right']) {

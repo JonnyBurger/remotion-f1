@@ -9,9 +9,9 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {extendViewbox} from './extend-viewbox';
-import {TriangleEntrance} from './TriangleEntrance';
-import {FontData, getOpenType} from './type';
+import {extendViewbox} from '../helpers/extend-viewbox';
+import {FontData, getOpenType} from '../helpers/type';
+import {TriangleEntrance} from '../transition/TriangleEntrance';
 
 const TEXT_COLOR = '#ffffff';
 

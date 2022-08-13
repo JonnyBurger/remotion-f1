@@ -6,7 +6,7 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {TriangleEntrance} from './TriangleEntrance';
+import {TriangleEntrance} from '../transition/TriangleEntrance';
 
 export const Driver: React.FC<{
 	scaleMultiplier: number;

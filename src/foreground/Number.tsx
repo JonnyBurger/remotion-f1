@@ -8,8 +8,8 @@ import {
 	staticFile,
 	useCurrentFrame,
 } from 'remotion';
-import {extendViewbox} from './extend-viewbox';
-import {FontData, getOpenType} from './type';
+import {extendViewbox} from '../helpers/extend-viewbox';
+import {FontData, getOpenType} from '../helpers/type';
 
 export const Num: React.FC<{
 	numb: string;

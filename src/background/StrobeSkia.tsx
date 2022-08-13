@@ -1,5 +1,15 @@
 import {SkiaCanvas} from '@remotion/skia';
-import {BackdropBlur, Path} from '@shopify/react-native-skia';
+import {
+	BackdropBlur,
+	Blur,
+	LinearGradient,
+	Paint,
+	Path,
+	Skia,
+	SkPath,
+	topLeft,
+	topRight,
+} from '@shopify/react-native-skia';
 import {mix} from 'polished';
 import React from 'react';
 import {
@@ -28,7 +38,7 @@ const getAmountOfLines = (type: Type): number => {
 		return 60;
 	}
 	if (type === 'white-base') {
-		return 5000;
+		return 500;
 	}
 
 	throw new Error('');
@@ -113,6 +123,8 @@ const getAlphaRange = (type: Type): [number, number] => {
 	throw new Error('unknown type');
 };
 
+const colors = ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.15)'];
+
 export const getOpacityGradient = (
 	type: Type,
 	index: number,
@@ -186,7 +198,7 @@ export const StrobeSkia: React.FC<{
 	const lines = getAmountOfLines(type);
 
 	return (
-		<SkiaCanvas width={width} height={height} mode="continuous">
+		<SkiaCanvas width={width} height={height}>
 			<BackdropBlur blur={type === 'rays' ? 20 : 0}>
 				{['left', 'right'].map((direction) => {
 					return (
@@ -239,13 +251,26 @@ export const StrobeSkia: React.FC<{
 								const edgeX2 = Math.sin(rotation - alpha) * endRadius + centerX;
 								const edgeY2 = Math.cos(rotation - alpha) * endRadius + centerY;
 								if (type === 'rays') {
+									const path = Skia.Path.MakeFromSVGString(
+										`M ${startX} ${startY} L ${edgeX1} ${edgeY1} L ${edgeX2} ${edgeY2} z`
+									) as SkPath;
+									const bounds = path.computeTightBounds();
+
 									return (
 										<Path
 											color={mix(0.3, color1, 'white')}
-											path={`M ${startX} ${startY} L ${edgeX1} ${edgeY1} L ${edgeX2} ${edgeY2} z`}
-											// eslint-disable-next-line react/style-prop-object
+											path={path}
 											opacity={getOpacity(type, i, direction)}
-										/>
+										>
+											<Paint style="fill">
+												<LinearGradient
+													colors={colors}
+													start={topLeft(bounds)}
+													end={topRight(bounds)}
+												/>
+												<Blur blur={10} />
+											</Paint>
+										</Path>
 									);
 								}
 
@@ -253,7 +278,6 @@ export const StrobeSkia: React.FC<{
 									<Path
 										path={`M ${startX} ${startY} L ${edgeX1} ${edgeY1}`}
 										color={color}
-										// eslint-disable-next-line react/style-prop-object
 										style="stroke"
 										opacity={getOpacity(type, i, direction)}
 									/>

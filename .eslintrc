@@ -1,3 +1,6 @@
 {
-	"extends": "@remotion"
+	"extends": "@remotion",
+	"rules": {
+		"react/style-prop-object": "off"
+	}
 }

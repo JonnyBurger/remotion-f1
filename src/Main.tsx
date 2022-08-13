@@ -7,12 +7,12 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {AllStrobesSkia} from './AllStrobesSkia';
-import {Driver} from './Driver';
-import {FirstName} from './FirstName';
-import {LastName} from './LastName';
-import {Num} from './Number';
-import {TriangleEntrance} from './TriangleEntrance';
+import {AllStrobesSkia} from './background/AllStrobesSkia';
+import {Driver} from './foreground/Driver';
+import {FirstName} from './foreground/FirstName';
+import {LastName} from './foreground/LastName';
+import {Num} from './foreground/Number';
+import {TriangleEntrance} from './transition/TriangleEntrance';
 
 export const Main: React.FC<{
 	src: string;

@@ -10,8 +10,8 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {extendViewbox} from './extend-viewbox';
-import {FontData, getOpenType} from './type';
+import {extendViewbox} from '../helpers/extend-viewbox';
+import {FontData, getOpenType} from '../helpers/type';
 
 const TEXT_COLOR = '#ffffff';
 
