@@ -12,8 +12,9 @@ export const RadialGradient: React.FC<{
 	color1: string;
 	width: number;
 }> = ({color1, width}) => {
-	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
+	const {fps, height} = useVideoConfig();
+
 	const scale = spring({
 		fps,
 		frame: frame - 2,
@@ -23,8 +24,9 @@ export const RadialGradient: React.FC<{
 		},
 		durationInFrames: 10,
 	});
+
 	const percent = interpolate(scale, [0, 1], [20, 45]);
-	const {height} = useVideoConfig();
+
 	return (
 		<AbsoluteFill
 			style={{
