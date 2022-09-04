@@ -11,3 +11,4 @@ Config.Output.setProResProfile('4444');
 
 Config.Bundling.overrideWebpackConfig((config) => enableSkia(config));
 Config.Rendering.setConcurrency(1);
+Config.Puppeteer.setChromiumOpenGlRenderer('angle');

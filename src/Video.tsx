@@ -19,7 +19,7 @@ export const RemotionVideo: React.FC = () => {
 				<Composition
 					id="RadialGradient"
 					component={RadialGradient}
-					durationInFrames={150}
+					durationInFrames={30}
 					height={720}
 					width={1280}
 					fps={30}
@@ -116,10 +116,12 @@ export const RemotionVideo: React.FC = () => {
 					width={1280}
 					fps={30}
 					defaultProps={{
-						src: staticFile('vettel.png'),
+						src: staticFile('jonny.png'),
 						imageStyle: {
-							width: 537,
-							height: 683,
+							width: 400,
+							marginTop: -40,
+							marginLeft: -40,
+							transform: `rotate(-4deg)`,
 						},
 						scaleMultiplier: 1,
 					}}
@@ -191,7 +193,7 @@ export const RemotionVideo: React.FC = () => {
 						color1: ASTON_MARTIN,
 						lastName: 'VETTEL',
 						firstName: 'SEBASTIAN',
-						numb: '12',
+						numb: '5',
 						imageStyle: {
 							width: 537,
 							height: 683,
@@ -211,12 +213,32 @@ export const RemotionVideo: React.FC = () => {
 						color1: '#eee',
 						firstName: 'MATTEO',
 						lastName: 'GAMBA',
-						numb: '4',
+						numb: '21',
 						imageStyle: {
 							width: 425,
 							height: 767,
 							transform: `scale(0.85)`,
 							marginTop: -60,
+						},
+					}}
+				/>
+				<Composition
+					id="William"
+					component={Main}
+					durationInFrames={90}
+					height={720}
+					width={1280}
+					fps={30}
+					defaultProps={{
+						width: 1280,
+						src: staticFile('william.png'),
+						color1: '#00b4ff',
+						firstName: 'WILLIAM',
+						lastName: 'CANDILLON',
+						numb: '90',
+						imageStyle: {
+							width: 425,
+							height: 767,
 						},
 					}}
 				/>
@@ -230,7 +252,7 @@ export const RemotionVideo: React.FC = () => {
 					defaultProps={{
 						width: 1280,
 						src: staticFile('jonny.png'),
-						color1: '#ffe168',
+						color1: '#d4fffe',
 						firstName: 'JONNY',
 						lastName: 'BURGER',
 						numb: '13',
